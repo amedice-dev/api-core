@@ -1,10 +1,9 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
-from defaults import DEFAULT_DESCRIPTION
-from organisations.types import OrganisationType, SpecialityType, ServiceType
+from .defaults import DEFAULT_DESCRIPTION
+from .medical_types import OrganisationType, SpecialityType, ServiceType
 from doctors.models import Doctor
-from users.models import User
 
 
 class Organisation(models.Model):

@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from organisations.models import MedicalInstitution
+from .models import Organisation
 
 
 class OrganisationsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MedicalInstitution
+        model = Organisation
         fields = "__all__"
