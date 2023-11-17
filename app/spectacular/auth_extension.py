@@ -2,7 +2,7 @@
 #
 #
 #
-#from drf_spectacular.contrib.rest_framework_simplejwt import SimpleJWTScheme
+# from drf_spectacular.contrib.rest_framework_simplejwt import SimpleJWTScheme
 #
 # from .backends import JWTAuthentication
 #

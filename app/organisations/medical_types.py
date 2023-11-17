@@ -40,4 +40,3 @@ class ServiceType(models.TextChoices):
     PHYSIOTHERAPY = "Физиотерапия"
     MASSAGE = "Массаж"
     COSMETOLOGY = "Косметология"
-

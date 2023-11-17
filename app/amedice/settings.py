@@ -3,7 +3,6 @@ from datetime import timedelta
 from pathlib import Path
 import environ
 
-from django.db.backends.postgresql.base import DatabaseWrapper
 from django.urls import reverse_lazy
 
 env = environ.Env(
@@ -13,7 +12,7 @@ env = environ.Env(
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Initialise environment variables
-environ.Env.read_env(os.path.join(BASE_DIR, ".env.dev"))
+environ.Env.read_env(os.path.join(BASE_DIR, ".env.prod"))
 
 
 SECRET_KEY = env("SECRET_KEY")
@@ -69,8 +68,6 @@ WSGI_APPLICATION = "amedice.wsgi.application"
 
 
 # Database
-# DatabaseWrapper.data = None
-
 DATABASES = {
     'default': {
         'ENGINE': env("DB_ENGINE"),
@@ -118,9 +115,9 @@ USE_I18N = True
 USE_TZ = True
 
 # Static
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
