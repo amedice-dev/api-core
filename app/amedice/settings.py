@@ -11,13 +11,15 @@ env = environ.Env(
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Initialise environment variables
-environ.Env.read_env(os.path.join(BASE_DIR, ".env.prod"))
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
+DEBUG = bool(os.environ.get("DEBUG", default=0))
 
-SECRET_KEY = env("SECRET_KEY")
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default="localhost")
+# 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
+# For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
+CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
 
 # Application definition
 INSTALLED_APPS = [
@@ -70,12 +72,12 @@ WSGI_APPLICATION = "amedice.wsgi.application"
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': env("DB_ENGINE"),
-        'NAME': env("DB_NAME"),
-        'USER': env("DB_USER"),
-        'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
-        'PORT': env("DB_PORT"),
+        "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("DB_NAME", BASE_DIR / "db.sqlite3"),
+        "USER": os.environ.get("DB_USER", "user"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "password"),
+        "HOST": os.environ.get("DB_HOST", "localhost"),
+        "PORT": os.environ.get("DB_PORT", "5432"),
     }
 }
 
@@ -108,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "CET"
+TIME_ZONE = "Asia/Tashkent"
 
 USE_I18N = True
 
@@ -116,8 +118,11 @@ USE_TZ = True
 
 # Static
 STATIC_URL = "/static/"
-
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Media
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "mediafiles"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

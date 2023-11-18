@@ -1,22 +1,18 @@
-# medical-centers-aggregator
+# Amedice
 
 This is the main application (backend) aggregator of medical centers.
 
 ## Clone this repository
 ```
-$ git clone git@github.com:Medical-Centers-Aggregator/medical-centers-aggregator.git
+$ git clone git@github.com:amedice-dev/api-core.git
 ```
 
 ## Requirements
-1. install all requirements
-```shell
-pip install -r requirements.txt
-```
-2. run [docker](https://www.docker.com)
+1. run [docker](https://www.docker.com)
 
-## Run App
+## Run App in Dev mode
 ```shell
-docker compose up --wait --build --pull always
+docker compose up -d --build
 ```
 
 ## Check Documentation
