@@ -7,5 +7,5 @@ from .serializers import OrganisationsSerializer
 
 class OrganisationsViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
-    queryset = Organisation.objects.all().order_by("-id")
+    queryset = Organisation.objects.all()
     serializer_class = OrganisationsSerializer

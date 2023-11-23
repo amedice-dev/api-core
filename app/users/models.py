@@ -29,14 +29,36 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    user_id = models.AutoField(primary_key=True)
     email = models.EmailField(unique=True, blank=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    is_superuser = models.BooleanField(default=False)
+    user_phone = models.CharField(max_length=100, blank=True, null=True)
+    # user_group = ...
+    is_email_verified = models.BooleanField(default=False)
+    is_phone_verified = models.BooleanField(default=False)
+    user_avatar = models.ImageField(upload_to="users_avatars", blank=True, null=True)
 
-    REQUIRED_FIELDS = ["first_name", "last_name"]
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    user_reviews = models.ForeignKey(
+        "reviews.Review",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="user_reviews",
+    )
+    organisations_list = models.ForeignKey(
+        "organisations.Organisation",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="organisations_list",
+    )
+
+    REQUIRED_FIELDS = ["first_name", "last_name", "user_phone"]
     USERNAME_FIELD = "email"
 
     objects = UserManager()

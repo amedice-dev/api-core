@@ -7,5 +7,5 @@ from .serializers import DoctorsSerializer
 
 class DoctorsViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
-    queryset = Doctor.objects.all().order_by("-id")
+    queryset = Doctor.objects.all()
     serializer_class = DoctorsSerializer

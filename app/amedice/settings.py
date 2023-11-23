@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "organisations.apps.OrganisationsConfig",
     "doctors.apps.DoctorsConfig",
     "users.apps.UsersConfig",
+    "reviews.apps.ReviewsConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
