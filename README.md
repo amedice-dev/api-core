@@ -1,30 +1,30 @@
 # Amedice
 
-This is the main application (backend) aggregator of medical centers.
+Это основное приложение (backend) агрегатора медицинских центров.
 
-## Clone this repository
+## Клонировать репозиторий
 ```
 $ git clone git@github.com:amedice-dev/api-core.git
 ```
 
-## Requirements
+## Зависимости
 1. run [docker](https://www.docker.com)
 
-## Run App in Dev mode
+## Запуск dev-версии приложения 
 ```shell
 docker compose up -d --build
 ```
 
-## Check Documentation
+## Документация
 ```
-http://localhost:8080/doc/swagger
+http://localhost:8000/doc/swagger
 ```
 or
 ```
-http://localhost:8080/doc/redoc
+http://localhost:8000/doc/redoc
 ```
 
-## Stop App
+## Остановка приложения
 ```shell
 docker compose down
 ```
