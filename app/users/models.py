@@ -2,8 +2,14 @@ from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
     PermissionsMixin,
+    Group,
 )
 from django.db import models
+
+from users.groups import create_groups
+
+
+create_groups()
 
 
 class UserManager(BaseUserManager):
@@ -14,6 +20,9 @@ class UserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save()
+        if user.user_role:
+            group = Group.objects.get(name=user.user_role)
+            group.user_set.add(user) if group else None
         return user
 
     def create_superuser(self, email, password, **extra_fields):
@@ -28,16 +37,22 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
+class UserRole(models.TextChoices):
+    ADMINISTRATORS = 'Administrators'
+    OWNERS = 'Owners'
+    VISITORS = 'Visitors'
+
+
 class User(AbstractBaseUser, PermissionsMixin):
-    user_id = models.AutoField(primary_key=True)
     email = models.EmailField(unique=True, blank=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    user_phone = models.CharField(max_length=100, blank=True, null=True)
-    # user_group = ...
+    user_phone = models.CharField(max_length=100)
+    user_avatar = models.ImageField(upload_to="users_avatars", blank=True, null=True)
+    user_role = models.CharField(max_length=50, choices=UserRole.choices)
+
     is_email_verified = models.BooleanField(default=False)
     is_phone_verified = models.BooleanField(default=False)
-    user_avatar = models.ImageField(upload_to="users_avatars", blank=True, null=True)
 
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
