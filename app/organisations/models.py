@@ -24,7 +24,8 @@ class Organisation(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        related_name="org_socials")
+        related_name="org_socials",
+    )
     org_photos = ArrayField(models.ImageField(upload_to="orgs"), blank=True, null=True)
     org_text_info = models.TextField(blank=True, null=True)
     org_directions = ArrayField(
@@ -37,24 +38,26 @@ class Organisation(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        related_name="org_owner"
+        related_name="org_owner",
     )
 
     org_admins = models.ManyToManyField(
-        "users.User",
-        blank=True,
-        related_name="org_admins"
+        "users.User", blank=True, related_name="org_admins"
     )
 
     is_active = models.BooleanField(default=False)
-    doctors_list = models.ForeignKey(Doctor, on_delete=models.CASCADE, blank=True, null=True)
-    org_rating = models.DecimalField(max_digits=2, decimal_places=1, blank=True, null=True)
+    doctors_list = models.ForeignKey(
+        Doctor, on_delete=models.CASCADE, blank=True, null=True
+    )
+    org_rating = models.DecimalField(
+        max_digits=2, decimal_places=1, blank=True, null=True
+    )
     org_reviews = models.ForeignKey(
         "reviews.Review",
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        related_name="org_reviews"
+        related_name="org_reviews",
     )
     # org_views_counter = ...
     # org_clicks_counter = ...

@@ -11,7 +11,8 @@ urlpatterns = [
     path("", include("doctors.urls")),
     # admin panel
     path("admin/", admin.site.urls),
-    # users
+    # users (temporary)
+    path("users/", include("users.urls")),
     # authentication
     path("auth/register/", UserRegistrationAPIView.as_view(), name="register_user"),
     path(
@@ -24,4 +25,6 @@ urlpatterns = [
     ),
     # swagger
     path("", include("spectacular.urls")),
+    # debug toolbar
+    path("__debug__/", include("debug_toolbar.urls")),
 ]

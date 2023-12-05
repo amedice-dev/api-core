@@ -1,9 +1,9 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 
 from .models import Organisation
 from .serializers import OrganisationsSerializer
-from users.permissions import IsOwner, IsOrgAdmin, IsVisitor
+from users.permissions import IsOwner, IsOrgAdmin, IsVisitor, CanUpdateOrganisation
 
 
 class OrganisationsViewSet(viewsets.ModelViewSet):
@@ -12,23 +12,17 @@ class OrganisationsViewSet(viewsets.ModelViewSet):
     serializer_class = OrganisationsSerializer
 
     def get_permissions(self):
-        if self.action == 'create':
+        if self.action in ["create", "destroy"]:
             permission_classes = [IsOwner]  # Only Owner can create Organisation
-        elif self.action in ['update', 'partial_update', 'destroy']:
-            permission_classes = [IsOwner | IsOrgAdmin]  # Only Owner or OrgAdmin can update and delete Organisation
+        elif self.action in ["update", "partial_update"]:
+            permission_classes = [
+                (IsOwner | IsOrgAdmin) & CanUpdateOrganisation
+            ]  # Only Owner or OrgAdmin can update and delete Organisation
         else:
-            permission_classes = [IsVisitor | IsOwner | IsOrgAdmin]
+            permission_classes = [AllowAny]
         return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
         # Set org_owner before saving Organisation
-        serializer.validated_data['org_owner'] = self.request.user
+        serializer.validated_data["org_owner"] = self.request.user
         serializer.save()
-
-    def create(self, request, *args, **kwargs):
-        self.permission_classes = [IsOwner, IsAuthenticated]
-        return super().create(request, *args, **kwargs)
-
-    def partial_update(self, request, *args, **kwargs):
-        self.permission_classes = [IsOwner | IsOrgAdmin, IsAuthenticated]
-        return super().partial_update(request, *args, **kwargs)

@@ -22,5 +22,5 @@ class Doctor(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        related_name="doctor_reviews"
+        related_name="doctor_reviews",
     )

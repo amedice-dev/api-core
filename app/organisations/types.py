@@ -38,4 +38,3 @@ class OrgDirectionsType(models.TextChoices):
     PSYCHIATRY = "Психиатрия"
     OPHTHALMOLOGY = "Офтальмология"
     GYNECOLOGY = "Гинекология"
-

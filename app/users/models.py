@@ -16,13 +16,19 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError("The Email must be set")
+
+        user_role = extra_fields.pop("user_role", None)
+
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save()
-        if user.user_role:
-            group = Group.objects.get(name=user.user_role)
-            group.user_set.add(user) if group else None
+
+        if user_role:
+            group = Group.objects.filter(name=user_role).first()
+            if group:
+                group.user_set.add(user)
+
         return user
 
     def create_superuser(self, email, password, **extra_fields):
@@ -38,9 +44,9 @@ class UserManager(BaseUserManager):
 
 
 class UserRole(models.TextChoices):
-    ADMINISTRATORS = 'Administrators'
-    OWNERS = 'Owners'
-    VISITORS = 'Visitors'
+    ADMINISTRATORS = "Administrators"
+    OWNERS = "Owners"
+    VISITORS = "Visitors"
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -49,7 +55,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=50)
     user_phone = models.CharField(max_length=100)
     user_avatar = models.ImageField(upload_to="users_avatars", blank=True, null=True)
-    user_role = models.CharField(max_length=50, choices=UserRole.choices)
 
     is_email_verified = models.BooleanField(default=False)
     is_phone_verified = models.BooleanField(default=False)
