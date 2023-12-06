@@ -17,6 +17,7 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError("The Email must be set")
 
+        groups = extra_fields.pop('groups', [])
         user_role = extra_fields.pop("user_role", None)
 
         email = self.normalize_email(email)
@@ -28,6 +29,8 @@ class UserManager(BaseUserManager):
             group = Group.objects.filter(name=user_role).first()
             if group:
                 group.user_set.add(user)
+                user.groups.add(group)
+                user.save()
 
         return user
 
@@ -70,11 +73,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=True,
         related_name="user_reviews",
     )
-    organisations_list = models.ForeignKey(
+    organisations_list = models.ManyToManyField(
         "organisations.Organisation",
-        on_delete=models.CASCADE,
         blank=True,
-        null=True,
         related_name="organisations_list",
     )
 

@@ -9,7 +9,7 @@ class Organisation(models.Model):
     org_id = models.AutoField(primary_key=True)
     org_name = models.CharField(max_length=100)
     org_url = models.URLField(blank=True, null=True)
-    ogr_category = models.CharField(max_length=40, choices=OrgCategoryType.choices)
+    org_category = models.CharField(max_length=40, choices=OrgCategoryType.choices)
     org_logo = models.ImageField(upload_to="org_logos", blank=True, null=True)
     org_local_adress = models.CharField(max_length=100, blank=True, null=True)
     org_local_landmark = models.CharField(max_length=100, blank=True, null=True)
