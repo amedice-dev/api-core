@@ -20,4 +20,3 @@ class DocDirectionsType(models.TextChoices):
     ORTHOPEDIST = "Ортопед"
     PHYSIOTHERAPIST = "Физиотерапевт"
     COSMETOLOGIST = "Косметолог"
-

@@ -1,7 +1,6 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
-from .defaults import DEFAULT_DESCRIPTION
 from .types import OrgCategoryType, OrgDirectionsType
 from doctors.models import Doctor
 
@@ -10,7 +9,7 @@ class Organisation(models.Model):
     org_id = models.AutoField(primary_key=True)
     org_name = models.CharField(max_length=100)
     org_url = models.URLField(blank=True, null=True)
-    ogr_category = models.CharField(max_length=40, choices=OrgCategoryType.choices)
+    org_category = models.CharField(max_length=40, choices=OrgCategoryType.choices)
     org_logo = models.ImageField(upload_to="org_logos", blank=True, null=True)
     org_local_adress = models.CharField(max_length=100, blank=True, null=True)
     org_local_landmark = models.CharField(max_length=100, blank=True, null=True)
@@ -25,7 +24,8 @@ class Organisation(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        related_name="org_socials")
+        related_name="org_socials",
+    )
     org_photos = ArrayField(models.ImageField(upload_to="orgs"), blank=True, null=True)
     org_text_info = models.TextField(blank=True, null=True)
     org_directions = ArrayField(
@@ -33,17 +33,31 @@ class Organisation(models.Model):
         blank=True,
         null=True,
     )
-    # org_owner = ...
-    # org_admins = ...
+    org_owner = models.ForeignKey(
+        "users.User",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="org_owner",
+    )
+
+    org_admins = models.ManyToManyField(
+        "users.User", blank=True, related_name="org_admins"
+    )
+
     is_active = models.BooleanField(default=False)
-    doctors_list = models.ForeignKey(Doctor, on_delete=models.CASCADE, blank=True, null=True)
-    org_rating = models.DecimalField(max_digits=2, decimal_places=1, blank=True, null=True)
+    doctors_list = models.ForeignKey(
+        Doctor, on_delete=models.CASCADE, blank=True, null=True
+    )
+    org_rating = models.DecimalField(
+        max_digits=2, decimal_places=1, blank=True, null=True
+    )
     org_reviews = models.ForeignKey(
         "reviews.Review",
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        related_name="org_reviews"
+        related_name="org_reviews",
     )
     # org_views_counter = ...
     # org_clicks_counter = ...
@@ -62,3 +76,13 @@ class OrgSocials(models.Model):
     odnoklassniki = models.CharField(max_length=100)
     imo = models.CharField(max_length=100)
     youtube = models.CharField(max_length=100)
+
+
+class OrgOwnersLink(models.Model):
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+
+
+class OrgAdminsLink(models.Model):
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
