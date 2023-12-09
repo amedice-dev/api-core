@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3rd party apps
     # "debug_toolbar",
+    'corsheaders',
     "rest_framework",
     "drf_yasg",
     "drf_spectacular",
@@ -47,6 +48,7 @@ MIDDLEWARE = [
     # "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -156,6 +158,11 @@ SPECTACULAR_SETTINGS = {
     # Custom Spectacular Settings
     "EXCLUDE_PATH": [reverse_lazy("schema")],
 }
+
+# CORS
+CORS_ALLOWED_ORIGINS = [
+       "http://localhost:3000",
+   ]
 
 # LOGGING = {
 #     "version": 1,
