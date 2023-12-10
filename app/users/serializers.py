@@ -6,8 +6,10 @@ from .models import User, UserRole
 
 class RegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(max_length=128, min_length=8, write_only=True)
-    user_role = serializers.ChoiceField(choices=UserRole.choices, write_only=True, required=False, allow_null=True)
-    groups = serializers.SlugRelatedField(many=True, read_only=True, slug_field='id')
+    user_role = serializers.ChoiceField(
+        choices=UserRole.choices, write_only=True, required=False, allow_null=True
+    )
+    groups = serializers.SlugRelatedField(many=True, read_only=True, slug_field="id")
 
     class Meta:
         model = User
@@ -26,7 +28,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return User.objects.create_user(**validated_data)
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"

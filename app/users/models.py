@@ -17,7 +17,7 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError("The Email must be set")
 
-        groups = extra_fields.pop('groups', [])
+        groups = extra_fields.pop("groups", [])
         user_role = extra_fields.pop("user_role", None)
 
         email = self.normalize_email(email)

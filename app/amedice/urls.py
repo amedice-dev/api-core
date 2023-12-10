@@ -10,20 +10,18 @@ urlpatterns = [
     # doctors
     # path("", include("doctors.urls")),
     # admin panel
-    path("admin/", admin.site.urls),
+    path("admin", admin.site.urls),
     # users (temporary)
-    path("users/", include("users.urls")),
+    path("", include("users.urls")),
     # authentication
-    path("auth/register/", UserRegistrationAPIView.as_view(), name="register_user"),
+    path("auth/register", UserRegistrationAPIView.as_view(), name="register_user"),
+    path("auth/login", jwt_views.TokenObtainPairView.as_view(), name="login_user"),
     path(
-        "auth/login/", jwt_views.TokenObtainPairView.as_view(), name="login_user"
-    ),
-    path(
-        "auth/refresh/",
+        "auth/refresh",
         jwt_views.TokenRefreshView.as_view(),
         name="token_refresh",
     ),
-    path("auth/logout/", jwt_views.TokenBlacklistView.as_view(), name="logout_user"),
+    path("auth/logout", jwt_views.TokenBlacklistView.as_view(), name="logout_user"),
     # swagger
     path("", include("spectacular.urls")),
     # debug toolbar
