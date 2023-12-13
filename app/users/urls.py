@@ -1,11 +1,12 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from .views import UserViewSet
+from .views import UsersViewSet
+from organisations.urls import NoTrailingSlashRouter
 
-router = DefaultRouter()
+router = NoTrailingSlashRouter()
 
-router.register(r"", UserViewSet)
+router.register(r"users", UsersViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),

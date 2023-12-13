@@ -6,16 +6,23 @@ from doctors.models import Doctor
 
 
 class Organisation(models.Model):
-    org_id = models.AutoField(primary_key=True)
+    org_id = models.AutoField(primary_key=True, db_index=True)
     org_name = models.CharField(max_length=100)
+    org_category = models.CharField(
+        max_length=40, choices=OrgCategoryType.choices, db_index=True
+    )
+    org_directions = ArrayField(
+        models.CharField(max_length=40, choices=OrgDirectionsType.choices),
+        blank=True,
+        null=True,
+    )
+    org_local_phone = models.CharField(max_length=100)
+    org_main_phone = models.CharField(max_length=100, blank=True, null=True)
     org_url = models.URLField(blank=True, null=True)
-    org_category = models.CharField(max_length=40, choices=OrgCategoryType.choices)
     org_logo = models.ImageField(upload_to="org_logos", blank=True, null=True)
     org_local_adress = models.CharField(max_length=100, blank=True, null=True)
     org_local_landmark = models.CharField(max_length=100, blank=True, null=True)
     org_location = models.CharField(max_length=100, blank=True, null=True)
-    org_local_phone = models.CharField(max_length=100)
-    org_main_phone = models.CharField(max_length=100)
     org_legal_name = models.CharField(max_length=100, blank=True, null=True)
     org_working_hours = models.CharField(max_length=100, blank=True, null=True)
     org_site_link = models.URLField(blank=True, null=True)
@@ -28,11 +35,6 @@ class Organisation(models.Model):
     )
     org_photos = ArrayField(models.ImageField(upload_to="orgs"), blank=True, null=True)
     org_text_info = models.TextField(blank=True, null=True)
-    org_directions = ArrayField(
-        models.CharField(max_length=20, choices=OrgDirectionsType.choices),
-        blank=True,
-        null=True,
-    )
     org_owner = models.ForeignKey(
         "users.User",
         on_delete=models.CASCADE,

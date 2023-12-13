@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3rd party apps
     # "debug_toolbar",
-    'corsheaders',
+    "corsheaders",
     "rest_framework",
     "drf_yasg",
     "drf_spectacular",
@@ -44,11 +44,11 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     # "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -160,26 +160,28 @@ SPECTACULAR_SETTINGS = {
 }
 
 # CORS
-CORS_ALLOWED_ORIGINS = [
-       "http://localhost:3000",
-   ]
+CORS_ORIGIN_ALLOW_ALL = True
 
-# LOGGING = {
-#     "version": 1,
-#     "disable_existing_loggers": False,
-#     "handlers": {
-#         "console": {
-#             "class": "logging.StreamHandler",
+CORS_ALLOW_CREDENTIALS = True
+
+# Debug Toolbar
+# if DEBUG:
+#     LOGGING = {
+#         "version": 1,
+#         "disable_existing_loggers": False,
+#         "handlers": {
+#             "console": {
+#                 "class": "logging.StreamHandler",
+#             },
 #         },
-#     },
-#     "loggers": {
-#         "django.db.backends": {
-#             "handlers": ["console"],
-#             "level": "DEBUG",
+#         "loggers": {
+#             "django.db.backends": {
+#                 "handlers": ["console"],
+#                 "level": "DEBUG",
+#             },
 #         },
-#     },
-# }
+#     }
 #
-# DEBUG_TOOLBAR_CONFIG = {
-#     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
-# }
+#     DEBUG_TOOLBAR_CONFIG = {
+#         "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+#     }

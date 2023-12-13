@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework import viewsets
 
 
-from .serializers import RegistrationSerializer, UserSerializer
+from .serializers import RegistrationSerializer, UsersSerializer
 from .models import User
 
 
@@ -21,7 +21,7 @@ class UserRegistrationAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UsersViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UsersSerializer
