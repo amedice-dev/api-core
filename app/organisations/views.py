@@ -1,13 +1,21 @@
+from django.db.models import Count
 from rest_framework import viewsets
+from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import action
 from drf_yasg.utils import swagger_auto_schema
+from drf_spectacular.utils import extend_schema
 
 from .models import Organisation
-from .serializers import OrganisationsSerializer, OrganisationPostSerializer
-from users.permissions import IsOwner, IsOrgAdmin, IsVisitor, CanUpdateOrganisation
+from .types import OrgCategory, OrgDirection
+from .serializers import (
+    OrganisationsSerializer,
+    OrganisationPostSerializer,
+    OrgCategorySerializer,
+    OrgDirectionSerializer,
+)
+from users.permissions import IsOwner, IsOrgAdmin, CanUpdateOrganisation
 
 
 class OrganisationsViewSet(viewsets.ModelViewSet):
@@ -48,8 +56,33 @@ class OrganisationsViewSet(viewsets.ModelViewSet):
         responses={status.HTTP_201_CREATED: OrganisationsSerializer()},
     )
     def create(self, request, *args, **kwargs):
-        """Создание организации"""
+        """Создание новой организации"""
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
-        return Response(status=405)
+        """Обновление данных организации"""
+        return super().update(request, *args, **kwargs)
+
+
+@extend_schema(responses={200: OrgCategorySerializer(many=True)})
+class CategoriesTreeView(APIView):
+    permission_classes = (AllowAny,)
+    http_method_names = ["get"]
+
+    def get(self, request):
+        categories = OrgCategory.objects.annotate(count=Count("organisation")).order_by(
+            "category_id"
+        )
+        serializer = OrgCategorySerializer(categories, many=True)
+        return Response(serializer.data)
+
+
+@extend_schema(responses={200: OrgDirectionSerializer(many=True)})
+class DirectionListView(APIView):
+    permission_classes = (AllowAny,)
+    http_method_names = ["get"]
+
+    def get(self, request):
+        directions = OrgDirection.objects.all()
+        serializer = OrgDirectionSerializer(directions, many=True)
+        return Response(serializer.data)

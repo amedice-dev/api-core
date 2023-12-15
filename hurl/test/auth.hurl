@@ -2,13 +2,13 @@
 # Owner Registration
 #######################################
 
-GET http://localhost:8000/users/
+GET http://localhost:8000/users
 HTTP 200
 [Captures]
 user_count: jsonpath "$" count
 
 
-POST http://localhost:8000/auth/register/
+POST http://localhost:8000/auth/register
 {
     "email": "owner{{user_count}}@test.com",
     "password": "FooFooFoo123",
@@ -24,7 +24,7 @@ owner_email: jsonpath "$.email"
 owner_name: jsonpath "$.first_name"
 
 
-GET http://localhost:8000/users/
+GET http://localhost:8000/users
 HTTP 200
 [Asserts]
 jsonpath "$[{{user_count}}].id" == {{owner_id}}
@@ -33,7 +33,7 @@ jsonpath "$[{{user_count}}].id" == {{owner_id}}
 # Owner Login
 #######################################
 
-POST http://localhost:8000/auth/login/
+POST http://localhost:8000/auth/login
 {
     "email": "{{owner_email}}",
     "password": "FooFooFoo123"
@@ -47,7 +47,7 @@ owner_refresh_token: jsonpath "$.refresh"
 # Owner Refresh Token
 #######################################
 
-POST http://localhost:8000/auth/refresh/
+POST http://localhost:8000/auth/refresh
 {
     "refresh": "{{owner_refresh_token}}"
 }
@@ -59,7 +59,7 @@ owner_access_token: jsonpath "$.access"
 # Administrator Registration
 #######################################
 
-POST http://localhost:8000/auth/register/
+POST http://localhost:8000/auth/register
 {
     "email": "admin{{user_count}}@test.com",
     "password": "LalaLala123",
@@ -78,7 +78,7 @@ admin_name: jsonpath "$.first_name"
 # Administrator Login
 #######################################
 
-POST http://localhost:8000/auth/login/
+POST http://localhost:8000/auth/login
 {
     "email": "{{admin_email}}",
     "password": "LalaLala123"
@@ -92,7 +92,7 @@ admin_refresh_token: jsonpath "$.refresh"
 # Administrator Refresh Token
 #######################################
 
-POST http://localhost:8000/auth/refresh/
+POST http://localhost:8000/auth/refresh
 {
     "refresh": "{{admin_refresh_token}}"
 }
@@ -104,7 +104,7 @@ admin_access_token: jsonpath "$.access"
 # Visitor Registration
 #######################################
 
-POST http://localhost:8000/auth/register/
+POST http://localhost:8000/auth/register
 {
     "email": "visitor{{user_count}}@test.com",
     "password": "BooBooBoo123",
@@ -123,7 +123,7 @@ visitor_name: jsonpath "$.first_name"
 # Visitor Login
 #######################################
 
-POST http://localhost:8000/auth/login/
+POST http://localhost:8000/auth/login
 {
     "email": "{{visitor_email}}",
     "password": "BooBooBoo123"
@@ -137,7 +137,7 @@ visitor_refresh_token: jsonpath "$.refresh"
 # Visitor Refresh Token
 #######################################
 
-POST http://localhost:8000/auth/refresh/
+POST http://localhost:8000/auth/refresh
 {
     "refresh": "{{visitor_refresh_token}}"
 }
