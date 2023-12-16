@@ -1,21 +1,15 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
-from .types import OrgCategoryType, OrgDirectionsType
+from .types import OrgCategory, OrgDirection
 from doctors.models import Doctor
 
 
 class Organisation(models.Model):
     org_id = models.AutoField(primary_key=True, db_index=True)
     org_name = models.CharField(max_length=100)
-    org_category = models.CharField(
-        max_length=40, choices=OrgCategoryType.choices, db_index=True
-    )
-    org_directions = ArrayField(
-        models.CharField(max_length=40, choices=OrgDirectionsType.choices),
-        blank=True,
-        null=True,
-    )
+    org_category = models.ForeignKey(OrgCategory, on_delete=models.PROTECT, blank=True)
+    org_directions = models.ManyToManyField(OrgDirection, blank=True)
     org_local_phone = models.CharField(max_length=100)
     org_main_phone = models.CharField(max_length=100, blank=True, null=True)
     org_url = models.URLField(blank=True, null=True)
@@ -28,7 +22,7 @@ class Organisation(models.Model):
     org_site_link = models.URLField(blank=True, null=True)
     org_socials = models.ForeignKey(
         "OrgSocials",
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name="org_socials",
@@ -49,14 +43,14 @@ class Organisation(models.Model):
 
     is_active = models.BooleanField(default=False)
     doctors_list = models.ForeignKey(
-        Doctor, on_delete=models.CASCADE, blank=True, null=True
+        Doctor, on_delete=models.SET_NULL, blank=True, null=True
     )
     org_rating = models.DecimalField(
         max_digits=2, decimal_places=1, blank=True, null=True
     )
     org_reviews = models.ForeignKey(
         "reviews.Review",
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name="org_reviews",

@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from .views import OrganisationsViewSet
+from .views import OrganisationsViewSet, CategoriesTreeView, DirectionListView
 
 
 class NoTrailingSlashRouter(DefaultRouter):
@@ -17,4 +17,6 @@ router.register(r"organisations", OrganisationsViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("categories_tree", CategoriesTreeView.as_view(), name="categories_tree"),
+    path("directions", DirectionListView.as_view(), name="directions"),
 ]
