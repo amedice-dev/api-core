@@ -151,8 +151,8 @@ SIMPLE_JWT = {
 # DRF Spectacular Settings
 SPECTACULAR_SETTINGS = {
     "TITLE": "Amedice Aggregator API",
-    "DESCRIPTION": "Documentation for the Medical Centers Aggregator API.",
-    "VERSION": "1.0.0",
+    "DESCRIPTION": "Документация для API агрегатора медицинских центров Amedice.",
+    "VERSION": "1.1.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "PREPROCESSING_HOOKS": ["spectacular.hooks.remove_apis_from_list"],
     # Custom Spectacular Settings
