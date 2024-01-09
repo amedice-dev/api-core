@@ -8,6 +8,7 @@ from doctors.models import Doctor
 class Organisation(models.Model):
     org_id = models.AutoField(primary_key=True, db_index=True)
     org_name = models.CharField(max_length=100)
+    org_slug = models.SlugField(max_length=130, unique=True, db_index=True)
     org_category = models.ForeignKey(OrgCategory, on_delete=models.PROTECT, blank=True)
     org_directions = models.ManyToManyField(OrgDirection, blank=True)
     org_local_phone = models.CharField(max_length=100)
@@ -28,7 +29,7 @@ class Organisation(models.Model):
         related_name="org_socials",
     )
     org_photos = ArrayField(models.ImageField(upload_to="orgs"), blank=True, null=True)
-    org_text_info = models.TextField(blank=True, null=True)
+    org_text_info = models.CharField(max_length=400, blank=True, null=True)
     org_owner = models.ForeignKey(
         "users.User",
         on_delete=models.CASCADE,
