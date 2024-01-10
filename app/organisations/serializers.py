@@ -34,8 +34,8 @@ class OrganisationPostSerializer(serializers.ModelSerializer):
         max_org_id = Organisation.objects.aggregate(Max("org_id"))["org_id__max"] or 0
         org_id = max_org_id + 1
         org_name_translit = translit(org_name, "ru", reversed=True)
-        org_slug = slugify(f"{org_id}_{org_name_translit}")
-        self.validated_data["org_slug"] = org_slug.replace("-", "_")
+        org_slug = slugify(f"{org_id}-{org_name_translit}")
+        self.validated_data["org_slug"] = org_slug
 
         return super().save(**kwargs)
 
@@ -65,12 +65,12 @@ class OrganisationsSerializer(serializers.ModelSerializer):
             "org_name",
             "org_category",
             "org_directions",
-            "org_local_adress",
+            "org_local_address",
             "org_logo",
             "org_text_info_short",
         ]
 
-    def get_org_text_info_short(self, obj):
+    def get_org_text_info_short(self, obj) -> str | None:
         return obj.org_text_info[:200] + "..." if obj.org_text_info else None
 
 
