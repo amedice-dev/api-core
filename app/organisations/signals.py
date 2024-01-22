@@ -1,7 +1,7 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django.db import connection
-from .types import OrgCategory, OrgDirection
+from catalog.models import OrgCategory, OrgDirection
 
 
 org_categories = [

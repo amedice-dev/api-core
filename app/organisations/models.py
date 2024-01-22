@@ -1,7 +1,7 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
-from .types import OrgCategory, OrgDirection
+from catalog.models import OrgCategory, OrgDirection
 from doctors.models import Doctor
 
 
