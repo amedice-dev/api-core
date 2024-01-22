@@ -420,3 +420,242 @@ HTTP 201
 [Captures]
 org_id_20: jsonpath "$.org_id"
 
+
+#######################################
+# Make Organisations "is_active"
+#######################################
+
+PATCH http://web:8000/organisations/1
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/2
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/3
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/4
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/5
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/6
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/7
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/8
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/9
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/10
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/11
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/12
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/13
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/14
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/15
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/16
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/17
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/18
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/19
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/20
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+#######################################
+# Request Organisations with filters
+#######################################
+
+GET http://web:8000/organisations?page=1&page_size=1&org_category=med_center
+HTTP 200
+[Asserts]
+jsonpath "$.count" == 2
+jsonpath "$.next" != null
+jsonpath "$.previous" == null
+jsonpath "$.results" count == 1
+
+GET http://web:8000/organisations?page=2&page_size=1&org_category=med_center
+HTTP 200
+[Asserts]
+jsonpath "$.count" == 2
+jsonpath "$.next" == null
+jsonpath "$.previous" != null
+jsonpath "$.results" count == 1
+
+GET http://web:8000/organisations?page=1&page_size=10
+HTTP 200
+[Asserts]
+jsonpath "$.count" == 20
+jsonpath "$.next" != null
+jsonpath "$.previous" == null
+jsonpath "$.results" count == 10
+
+GET http://web:8000/organisations?page=1&page_size=10&org_category=cosmetology_center
+HTTP 200
+[Asserts]
+jsonpath "$.count" == 4
+jsonpath "$.next" == null
+jsonpath "$.previous" == null
+jsonpath "$.results" count == 4
+
+GET http://web:8000/organisations?page=1&page_size=10&org_direction=gynecology&org_category=cosmetology_center
+HTTP 200
+[Asserts]
+jsonpath "$.count" == 3
+jsonpath "$.next" == null
+jsonpath "$.previous" == null
+jsonpath "$.results" count == 3
+
+#######################################
+# Description len test
+#######################################
+
+PATCH http://web:8000/organisations/1
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_text_info": "Медицинский центр 'Dark Side Medical' предоставляет высококачественные медицинские услуги, объединяя опыт врачей с современными технологиями. Наша миссия - забота о вашем здоровье. Врачи с различными специализациями обеспечивают комплексное лечение, а дружелюбная атмосфера создает комфортное окружение для пациентов."
+}
+HTTP 200

@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.11.4-slim-buster
+FROM python:3.11-alpine
 
 # set work directory
 WORKDIR /usr/src/app
@@ -9,9 +9,8 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # install system dependencies
-RUN apt-get update && apt-get install -y netcat curl
-RUN curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/4.1.0/hurl_4.1.0_amd64.deb
-RUN apt update && apt install ./hurl_4.1.0_amd64.deb -y && rm ./hurl_4.1.0_amd64.deb
+RUN apk add --no-cache netcat-openbsd
+RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing hurl
 
 # install dependencies
 RUN pip install --upgrade pip

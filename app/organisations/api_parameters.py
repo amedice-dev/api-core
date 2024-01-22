@@ -8,6 +8,14 @@ ID_PARAMETER = OpenApiParameter(
     required=True,
 )
 
+CATEGORY_SLUG_PARAMETER = OpenApiParameter(
+    name="category_slug",
+    description="Уникальное slug значение, идентифицирующее категорию организаций.",
+    type=str,
+    location="query",
+    required=True,
+)
+
 ORG_CATEGORY_PARAMETER = OpenApiParameter(
     name="org_category",
     description="Отфильтровать организации по slug категории.",

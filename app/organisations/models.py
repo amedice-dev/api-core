@@ -15,7 +15,7 @@ class Organisation(models.Model):
     org_main_phone = models.CharField(max_length=100, blank=True, null=True)
     org_url = models.URLField(blank=True, null=True)
     org_logo = models.ImageField(upload_to="org_logos", blank=True, null=True)
-    org_local_adress = models.CharField(max_length=100, blank=True, null=True)
+    org_local_address = models.CharField(max_length=100, blank=True, null=True)
     org_local_landmark = models.CharField(max_length=100, blank=True, null=True)
     org_location = models.CharField(max_length=100, blank=True, null=True)
     org_legal_name = models.CharField(max_length=100, blank=True, null=True)
