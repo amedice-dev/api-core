@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.exceptions import NotFound
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,7 +8,7 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.pagination import PageNumberPagination
 
 from .models import Organisation
-from .api_parameters import (
+from .schema_parameters import (
     ID_PARAMETER,
     ORG_CATEGORY_PARAMETER,
     ORG_DIRECTION_PARAMETER,
@@ -85,9 +86,17 @@ class OrganisationsViewSet(viewsets.ModelViewSet):
         queryset = Organisation.objects.filter(is_active=True)
 
         if org_category:
+            if not Organisation.objects.filter(
+                org_category__slug=org_category
+            ).exists():
+                raise NotFound(detail="Организация с указанной категорией не найдена")
             queryset = queryset.filter(org_category__slug=org_category)
 
         if org_direction:
+            if not Organisation.objects.filter(
+                org_directions__slug=org_direction
+            ).exists():
+                raise NotFound(detail="Организация с указанным направлением не найдена")
             queryset = queryset.filter(org_directions__slug=org_direction)
 
         page = self.paginate_queryset(queryset)

@@ -2,16 +2,10 @@
 # New Organisation`s Owner
 #######################################
 
-GET http://web:8000/users
-HTTP 200
-[Captures]
-user_count: jsonpath "$" count
-
-
 POST http://web:8000/auth/register
 {
-    "email": "owner_boss_{{user_count}}@test.com",
-    "password": "TheBigFatBoss",
+    "email": "owner@test.com",
+    "password": "big_boss",
     "first_name": "John",
     "last_name": "Doe",
     "user_phone": "+7 666 666 66 66",
@@ -25,8 +19,8 @@ owner_email: jsonpath "$.email"
 
 POST http://web:8000/auth/login
 {
-    "email": "owner_boss_{{user_count}}@test.com",
-    "password": "TheBigFatBoss"
+    "email": "owner@test.com",
+    "password": "big_boss"
 }
 HTTP 200
 [Captures]
@@ -37,7 +31,7 @@ owner_refresh_token: jsonpath "$.refresh"
 # Get Categories
 #######################################
 
-GET http://web:8000/categories_tree
+GET http://web:8000/catalog/categories_tree
 HTTP 200
 [Captures]
 med_center_id: jsonpath "$[0].category_id"
@@ -56,26 +50,26 @@ gos_maternity_hospital_id: jsonpath "$[12].category_id"
 gos_dispensary_id: jsonpath "$[13].category_id"
 [Asserts]
 jsonpath "$" count == 14
-jsonpath "$[0].slug" == "med_center"
-jsonpath "$[1].slug" == "laboratory"
-jsonpath "$[2].slug" == "dental_clinic"
-jsonpath "$[3].slug" == "diagnostic_center"
-jsonpath "$[4].slug" == "eye_clinic"
-jsonpath "$[5].slug" == "kids_clinic"
-jsonpath "$[6].slug" == "cosmetology_center"
-jsonpath "$[7].slug" == "gos_hospital"
-jsonpath "$[8].slug" == "gos_ambulatory"
-jsonpath "$[9].slug" == "gos_kids_hospital"
-jsonpath "$[10].slug" == "gos_polyclinic"
-jsonpath "$[11].slug" == "gos_dental_polyclinic"
-jsonpath "$[12].slug" == "gos_maternity_hospital"
-jsonpath "$[13].slug" == "gos_dispensary"
+jsonpath "$[0].slug" == "med_centers"
+jsonpath "$[1].slug" == "laboratories"
+jsonpath "$[2].slug" == "dental_clinics"
+jsonpath "$[3].slug" == "diagnostic_centers"
+jsonpath "$[4].slug" == "eye_clinics"
+jsonpath "$[5].slug" == "kids_clinics"
+jsonpath "$[6].slug" == "cosmetology_centers"
+jsonpath "$[7].slug" == "gos_hospitals"
+jsonpath "$[8].slug" == "gos_ambulatories"
+jsonpath "$[9].slug" == "gos_kids_hospitals"
+jsonpath "$[10].slug" == "gos_polyclinics"
+jsonpath "$[11].slug" == "gos_dental_polyclinics"
+jsonpath "$[12].slug" == "gos_maternity_hospitals"
+jsonpath "$[13].slug" == "gos_dispensaries"
 
 #######################################
 # Get Directions
 #######################################
 
-GET http://web:8000/directions
+GET http://web:8000/catalog/directions
 HTTP 200
 [Captures]
 urology_id: jsonpath "$[0].direction_id"
@@ -118,7 +112,7 @@ jsonpath "$[16].slug" == "ophthalmology"
 jsonpath "$[17].slug" == "gynecology"
 
 #######################################
-# 20 New Organisations
+# 40 New Organisations
 #######################################
 
 POST http://web:8000/organisations
@@ -420,6 +414,305 @@ HTTP 201
 [Captures]
 org_id_20: jsonpath "$.org_id"
 
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Healing Hands Medical Center",
+    "org_category": {{med_center_id}},
+    "org_local_phone": "+7 111 222 4444",
+    "org_directions": [
+        {{cosmetology_id}},
+        {{gynecology_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_21: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Tech Care Laboratory",
+    "org_category": {{laboratory_id}},
+    "org_local_phone": "+7 555 666 8888",
+    "org_directions": [
+        {{orthopedics_id}},
+        {{physiotherapy_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_22: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Sunset Diagnostic Center",
+    "org_category": {{diagnostic_center_id}},
+    "org_local_phone": "+7 777 888 1111",
+    "org_directions": [
+        {{dermatology_id}},
+        {{surgery_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_23: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Happy Kids Pediatrics",
+    "org_category": {{kids_clinic_id}},
+    "org_local_phone": "+7 999 888 2222",
+    "org_directions": [
+        {{pediatrics_id}},
+        {{oto_rhino_laryngology_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_24: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Tech Wellness Center",
+    "org_category": {{gos_hospital_id}},
+    "org_local_phone": "+7 123 456 7890",
+    "org_directions": [
+        {{neurology_id}},
+        {{psychiatry_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_25: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Eternal Beauty Cosmetology",
+    "org_category": {{cosmetology_center_id}},
+    "org_local_phone": "+7 111 222 3333",
+    "org_directions": [
+        {{dermatology_id}},
+        {{cosmetology_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_26: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "City General Hospital",
+    "org_category": {{gos_ambulatory_id}},
+    "org_local_phone": "+7 333 444 5555",
+    "org_directions": [
+        {{surgery_id}},
+        {{orthopedics_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_27: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Little Stars Kids Hospital",
+    "org_category": {{gos_kids_hospital_id}},
+    "org_local_phone": "+7 666 777 8888",
+    "org_directions": [
+        {{pediatrics_id}},
+        {{cardiology_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_28: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Green Meadows Polyclinic",
+    "org_category": {{gos_polyclinic_id}},
+    "org_local_phone": "+7 999 888 7777",
+    "org_directions": [
+        {{therapy_id}},
+        {{oto_rhino_laryngology_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_29: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Smile Dental Polyclinic",
+    "org_category": {{gos_dental_clinic_id}},
+    "org_local_phone": "+7 111 222 3333",
+    "org_directions": [
+        {{dentistry_id}},
+        {{orthopedics_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_30: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Joyful Maternity Hospital",
+    "org_category": {{gos_maternity_hospital_id}},
+    "org_local_phone": "+7 555 666 7777",
+    "org_directions": [
+        {{gynecology_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_31: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Sunrise Dispensary",
+    "org_category": {{gos_dispensary_id}},
+    "org_local_phone": "+7 777 888 9999",
+    "org_directions": [
+        {{therapy_id}},
+        {{psychiatry_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_32: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Healthy Life Wellness",
+    "org_category": {{med_center_id}},
+    "org_local_phone": "+7 333 444 5555",
+    "org_directions": [
+        {{cardiology_id}},
+        {{physiotherapy_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_33: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Tech Lab Innovations",
+    "org_category": {{laboratory_id}},
+    "org_local_phone": "+7 888 999 0000",
+    "org_directions": [
+        {{dermatology_id}},
+        {{oncology_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_34: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Sunset Kids Clinic",
+    "org_category": {{kids_clinic_id}},
+    "org_local_phone": "+7 111 222 3333",
+    "org_directions": [
+        {{pediatrics_id}},
+        {{oto_rhino_laryngology_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_35: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Eternal Youth Cosmetology",
+    "org_category": {{cosmetology_center_id}},
+    "org_local_phone": "+7 555 666 7777",
+    "org_directions": [
+        {{dermatology_id}},
+        {{cosmetology_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_36: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "City Hospital",
+    "org_category": {{gos_hospital_id}},
+    "org_local_phone": "+7 999 888 9999",
+    "org_directions": [
+        {{surgery_id}},
+        {{orthopedics_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_37: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Little Angels Kids Hospital",
+    "org_category": {{gos_kids_hospital_id}},
+    "org_local_phone": "+7 111 222 4444",
+    "org_directions": [
+        {{pediatrics_id}},
+        {{cardiology_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_38: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Green Valley Polyclinic",
+    "org_category": {{gos_polyclinic_id}},
+    "org_local_phone": "+7 333 444 5555",
+    "org_directions": [
+        {{therapy_id}},
+        {{oto_rhino_laryngology_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_39: jsonpath "$.org_id"
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Dental Bliss Polyclinic",
+    "org_category": {{gos_dental_clinic_id}},
+    "org_local_phone": "+7 777 888 0000",
+    "org_directions": [
+        {{dentistry_id}},
+        {{orthopedics_id}}
+    ]
+}
+HTTP 201
+[Captures]
+org_id_40: jsonpath "$.org_id"
+
 
 #######################################
 # Make Organisations "is_active"
@@ -605,43 +898,223 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
+PATCH http://web:8000/organisations/21
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/22
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/23
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/24
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/25
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/26
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/27
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/28
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/29
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/30
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/31
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/32
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/33
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/34
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/35
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/36
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/37
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/38
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/39
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
+PATCH http://web:8000/organisations/40
+Authorization: Bearer {{owner_access_token}}
+{
+    "is_active": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.is_active" == true
+
 #######################################
 # Request Organisations with filters
 #######################################
 
-GET http://web:8000/organisations?page=1&page_size=1&org_category=med_center
+GET http://web:8000/organisations?page=1&page_size=1&org_category=med_centers
 HTTP 200
 [Asserts]
-jsonpath "$.count" == 2
+jsonpath "$.count" == 4
 jsonpath "$.next" != null
 jsonpath "$.previous" == null
 jsonpath "$.results" count == 1
 
-GET http://web:8000/organisations?page=2&page_size=1&org_category=med_center
+GET http://web:8000/organisations?page=2&page_size=1&org_category=med_centers
 HTTP 200
 [Asserts]
-jsonpath "$.count" == 2
-jsonpath "$.next" == null
+jsonpath "$.count" == 4
+jsonpath "$.next" == "http://web:8000/organisations?org_category=med_centers&page=3&page_size=1"
 jsonpath "$.previous" != null
 jsonpath "$.results" count == 1
 
 GET http://web:8000/organisations?page=1&page_size=10
 HTTP 200
 [Asserts]
-jsonpath "$.count" == 20
+jsonpath "$.count" == 40
 jsonpath "$.next" != null
 jsonpath "$.previous" == null
 jsonpath "$.results" count == 10
 
-GET http://web:8000/organisations?page=1&page_size=10&org_category=cosmetology_center
+GET http://web:8000/organisations?page=1&page_size=10&org_category=cosmetology_centers
 HTTP 200
 [Asserts]
-jsonpath "$.count" == 4
+jsonpath "$.count" == 6
 jsonpath "$.next" == null
 jsonpath "$.previous" == null
-jsonpath "$.results" count == 4
+jsonpath "$.results" count == 6
 
-GET http://web:8000/organisations?page=1&page_size=10&org_direction=gynecology&org_category=cosmetology_center
+GET http://web:8000/organisations?page=1&page_size=10&org_direction=gynecology&org_category=cosmetology_centers
 HTTP 200
 [Asserts]
 jsonpath "$.count" == 3
@@ -657,5 +1130,39 @@ PATCH http://web:8000/organisations/1
 Authorization: Bearer {{owner_access_token}}
 {
     "org_text_info": "Медицинский центр 'Dark Side Medical' предоставляет высококачественные медицинские услуги, объединяя опыт врачей с современными технологиями. Наша миссия - забота о вашем здоровье. Врачи с различными специализациями обеспечивают комплексное лечение, а дружелюбная атмосфера создает комфортное окружение для пациентов."
+}
+HTTP 200
+
+#######################################
+# New Full Organisation
+#######################################
+
+POST http://web:8000/organisations
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_name": "Медицинский центр МедТести XXI",
+    "org_local_phone": "+998781482288",
+    "org_category": 1,
+    "org_directions": [1, 2, 10, 14, 18]
+}
+HTTP 201
+
+PATCH http://web:8000/organisations/41
+Authorization: Bearer {{owner_access_token}}
+{
+    "org_main_phone": null,
+    "org_url": null,
+    "org_local_address": "ул. Рашидова , 94д",
+    "org_local_landmark": "Юнусабадский р-н, напротив Шавермы",
+    "org_location": null,
+    "org_legal_name": "ООО 'МедТести XXI'",
+    "org_site_link": "http://www.test-med-xxi.com",
+    "org_photos": null,
+    "org_text_info": "Медицинский центр 'МедТести XXI' - это современное заведение, где опытные врачи и передовые технологии объединяются для предоставления высококачественных медицинских услуг. Наша миссия заключается в обеспечении комплексного подхода к здоровью каждого пациента. У нас работают специалисты различных областей медицины, готовые предложить индивидуальное лечение, а дружелюбная атмосфера центра создает комфортное окружение для всех посетителей.",
+    "is_active": true,
+    "org_rating": null,
+    "doctors_list": null,
+    "org_reviews": null,
+    "org_admins": []
 }
 HTTP 200

@@ -1,26 +1,60 @@
 from django.db.models import Count
-from rest_framework import viewsets
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, ListCreateAPIView
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
-from drf_yasg.utils import swagger_auto_schema
 from drf_spectacular.utils import extend_schema
 
-from .api_parameters import (
+from .schema_parameters import (
     CATEGORY_SLUG_PARAMETER,
 )
 from organisations.models import Organisation
 from .models import OrgCategory, OrgDirection
 from .serializers import (
+    OrgCategoryWithCountSerializer,
     OrgCategorySerializer,
     OrgDirectionSerializer,
 )
-from users.permissions import IsOwner, IsOrgAdmin, CanUpdateOrganisation
 
 
-@extend_schema(responses={200: OrgCategorySerializer(many=True)})
+class CategoriesAPIView(ListCreateAPIView):
+    queryset = OrgCategory.objects.all()
+    permission_classes = (AllowAny,)
+    http_method_names = ["post"]
+    serializer_class = OrgCategorySerializer
+
+    def get_permissions(self):
+        if self.request.method == "POST":
+            permission_classes = [
+                IsAdminUser,
+            ]
+        else:
+            permission_classes = [
+                AllowAny,
+            ]
+        return [permission() for permission in permission_classes]
+
+
+class DirectionsAPIView(ListCreateAPIView):
+    queryset = OrgDirection.objects.all()
+    permission_classes = (AllowAny,)
+    http_method_names = ["get", "post"]
+    serializer_class = OrgDirectionSerializer
+
+    def get_permissions(self):
+        if self.request.method == "POST":
+            permission_classes = [
+                IsAdminUser,
+            ]
+        else:
+            permission_classes = [
+                AllowAny,
+            ]
+        return [permission() for permission in permission_classes]
+
+
+@extend_schema(responses={200: OrgCategoryWithCountSerializer(many=True)})
 class CategoriesTreeView(APIView):
     permission_classes = (AllowAny,)
     http_method_names = ["get"]
@@ -30,19 +64,7 @@ class CategoriesTreeView(APIView):
         categories = OrgCategory.objects.annotate(count=Count("organisation")).order_by(
             "category_id"
         )
-        serializer = OrgCategorySerializer(categories, many=True)
-        return Response(serializer.data)
-
-
-@extend_schema(responses={200: OrgDirectionSerializer(many=True)})
-class DirectionListView(APIView):
-    permission_classes = (AllowAny,)
-    http_method_names = ["get"]
-
-    def get(self, request):
-        """Получение списка направлений организаций."""
-        directions = OrgDirection.objects.all()
-        serializer = OrgDirectionSerializer(directions, many=True)
+        serializer = OrgCategoryWithCountSerializer(categories, many=True)
         return Response(serializer.data)
 
 
