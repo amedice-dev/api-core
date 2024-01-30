@@ -1,7 +1,7 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
-from .types import OrgCategory, OrgDirection
+from catalog.models import OrgCategory, OrgDirection
 from doctors.models import Doctor
 
 
@@ -29,7 +29,7 @@ class Organisation(models.Model):
         related_name="org_socials",
     )
     org_photos = ArrayField(models.ImageField(upload_to="orgs"), blank=True, null=True)
-    org_text_info = models.CharField(max_length=400, blank=True, null=True)
+    org_text_info = models.CharField(max_length=1000, blank=True, null=True)
     org_owner = models.ForeignKey(
         "users.User",
         on_delete=models.CASCADE,

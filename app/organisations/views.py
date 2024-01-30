@@ -1,7 +1,5 @@
-from django.db.models import Count
 from rest_framework import viewsets
-from rest_framework.generics import GenericAPIView
-from rest_framework.views import APIView
+from rest_framework.exceptions import NotFound
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
@@ -10,20 +8,16 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.pagination import PageNumberPagination
 
 from .models import Organisation
-from .api_parameters import (
+from .schema_parameters import (
     ID_PARAMETER,
-    CATEGORY_SLUG_PARAMETER,
     ORG_CATEGORY_PARAMETER,
     ORG_DIRECTION_PARAMETER,
     PAGE_PARAMETER,
     PAGE_SIZE_PARAMETER,
 )
-from .types import OrgCategory, OrgDirection
 from .serializers import (
     OrganisationsSerializer,
     OrganisationPostSerializer,
-    OrgCategorySerializer,
-    OrgDirectionSerializer,
     OrganisationDetailSerializer,
 )
 from users.permissions import IsOwner, IsOrgAdmin, CanUpdateOrganisation
@@ -92,9 +86,17 @@ class OrganisationsViewSet(viewsets.ModelViewSet):
         queryset = Organisation.objects.filter(is_active=True)
 
         if org_category:
+            if not Organisation.objects.filter(
+                org_category__slug=org_category
+            ).exists():
+                raise NotFound(detail="Организация с указанной категорией не найдена")
             queryset = queryset.filter(org_category__slug=org_category)
 
         if org_direction:
+            if not Organisation.objects.filter(
+                org_directions__slug=org_direction
+            ).exists():
+                raise NotFound(detail="Организация с указанным направлением не найдена")
             queryset = queryset.filter(org_directions__slug=org_direction)
 
         page = self.paginate_queryset(queryset)
@@ -139,73 +141,3 @@ class OrganisationsViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         """Удаление организации."""
         return super().destroy(request, *args, **kwargs)
-
-
-@extend_schema(responses={200: OrgCategorySerializer(many=True)})
-class CategoriesTreeView(APIView):
-    permission_classes = (AllowAny,)
-    http_method_names = ["get"]
-
-    def get(self, request):
-        """Получение списка категорий с количество организаций в каждой из них."""
-        categories = OrgCategory.objects.annotate(count=Count("organisation")).order_by(
-            "category_id"
-        )
-        serializer = OrgCategorySerializer(categories, many=True)
-        return Response(serializer.data)
-
-
-@extend_schema(responses={200: OrgDirectionSerializer(many=True)})
-class DirectionListView(APIView):
-    permission_classes = (AllowAny,)
-    http_method_names = ["get"]
-
-    def get(self, request):
-        """Получение списка направлений организаций."""
-        directions = OrgDirection.objects.all()
-        serializer = OrgDirectionSerializer(directions, many=True)
-        return Response(serializer.data)
-
-
-class CategoryDirectionsView(GenericAPIView):
-    permission_classes = (AllowAny,)
-    http_method_names = ["get"]
-    serializer_class = OrgDirectionSerializer
-
-    @extend_schema(
-        parameters=[
-            CATEGORY_SLUG_PARAMETER,
-        ]
-    )
-    def get(self, request):
-        """Получение списка направлений для определенной категории."""
-        category_slug = request.query_params.get("category_slug")
-
-        if not category_slug:
-            return Response(
-                {"error": "category_slug parameter is required"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        try:
-            category = OrgCategory.objects.get(slug=category_slug)
-        except OrgCategory.DoesNotExist:
-            return Response(
-                {"error": "Category not found"}, status=status.HTTP_404_NOT_FOUND
-            )
-
-        # Get all organizations for the specified category and prefetch related OrgDirection objects
-        organisations = (
-            Organisation.objects.select_related("org_category")
-            .prefetch_related("directions")
-            .filter(org_category=category)
-        )
-
-        # Collect unique directions from these organizations
-        directions = OrgDirection.objects.filter(
-            organisation__in=organisations
-        ).distinct()
-
-        # Serialize and return directions
-        serializer = OrgDirectionSerializer(directions, many=True)
-        return Response(serializer.data)

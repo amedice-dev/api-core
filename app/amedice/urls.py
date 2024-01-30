@@ -5,6 +5,8 @@ from rest_framework_simplejwt import views as jwt_views
 from users.views import UserRegistrationAPIView
 
 urlpatterns = [
+    # catalog of categories and directions
+    path("catalog/", include("catalog.urls")),
     # organisations
     path("", include("organisations.urls")),
     # doctors

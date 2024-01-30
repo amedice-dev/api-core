@@ -4,7 +4,6 @@ from django.db.models import Max
 from transliterate import translit
 
 from .models import Organisation
-from .types import OrgCategory, OrgDirection
 
 
 class OrganisationPostSerializer(serializers.ModelSerializer):
@@ -38,20 +37,6 @@ class OrganisationPostSerializer(serializers.ModelSerializer):
         self.validated_data["org_slug"] = org_slug
 
         return super().save(**kwargs)
-
-
-class OrgCategorySerializer(serializers.ModelSerializer):
-    count = serializers.IntegerField(read_only=True)
-
-    class Meta:
-        model = OrgCategory
-        fields = ["category_id", "name", "slug", "type", "count"]
-
-
-class OrgDirectionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OrgDirection
-        fields = ["direction_id", "name", "slug"]
 
 
 class OrganisationsSerializer(serializers.ModelSerializer):
