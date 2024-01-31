@@ -1147,6 +1147,24 @@ Authorization: Bearer {{owner_access_token}}
 }
 HTTP 201
 
+POST http://web:8000/socials
+Authorization: Bearer {{owner_access_token}}
+
+{
+    "whatsapp": "+998781482288",
+    "viber": null,
+    "telegram": "@telegram",
+    "instagram": null,
+    "facebook": null,
+    "vkontakte": "moonservice_spb",
+    "odnoklassniki": null,
+    "imo": null,
+    "youtube": null
+}
+HTTP 201
+[Captures]
+org_socials_id: jsonpath "$.id"
+
 PATCH http://web:8000/organisations/41
 Authorization: Bearer {{owner_access_token}}
 {
@@ -1160,9 +1178,37 @@ Authorization: Bearer {{owner_access_token}}
     "org_photos": null,
     "org_text_info": "Медицинский центр 'МедТести XXI' - это современное заведение, где опытные врачи и передовые технологии объединяются для предоставления высококачественных медицинских услуг. Наша миссия заключается в обеспечении комплексного подхода к здоровью каждого пациента. У нас работают специалисты различных областей медицины, готовые предложить индивидуальное лечение, а дружелюбная атмосфера центра создает комфортное окружение для всех посетителей.",
     "is_active": true,
-    "org_rating": null,
     "doctors_list": null,
-    "org_reviews": null,
-    "org_admins": []
+    "org_socials": {{org_socials_id}},
+    "org_working_hours": {
+        "monday": {
+            "open": "09:00",
+            "close": "18:00"
+        },
+        "tuesday": {
+            "open": "09:00",
+            "close": "18:00"
+        },
+        "wednesday": {
+            "open": "09:00",
+            "close": "18:00"
+        },
+        "thursday": {
+            "open": "09:00",
+            "close": "18:00"
+        },
+        "friday": {
+            "open": "09:00",
+            "close": "18:00"
+        },
+        "saturday": {
+            "open": "10:00",
+            "close": "16:00"
+        },
+        "sunday": {
+            "open": "10:00",
+            "close": "16:00"
+        }
+    }
 }
 HTTP 200
