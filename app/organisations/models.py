@@ -3,6 +3,7 @@ from django.db import models
 
 from catalog.models import OrgCategory, OrgDirection
 from doctors.models import Doctor
+from reviews.models import Review
 
 
 class Organisation(models.Model):
@@ -22,7 +23,7 @@ class Organisation(models.Model):
     org_working_hours = models.CharField(max_length=100, blank=True, null=True)
     org_site_link = models.URLField(blank=True, null=True)
     org_socials = models.ForeignKey(
-        "OrgSocials",
+        "socials.OrgSocials",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
@@ -59,21 +60,6 @@ class Organisation(models.Model):
     # org_views_counter = ...
     # org_clicks_counter = ...
 
-    def __str__(self):
-        return self.org_name
-
-
-class OrgSocials(models.Model):
-    whatsapp = models.CharField(max_length=100)
-    viber = models.CharField(max_length=100)
-    telegram = models.CharField(max_length=100)
-    instagram = models.CharField(max_length=100)
-    facebook = models.CharField(max_length=100)
-    vkontakte = models.CharField(max_length=100)
-    odnoklassniki = models.CharField(max_length=100)
-    imo = models.CharField(max_length=100)
-    youtube = models.CharField(max_length=100)
-
 
 class OrgOwnersLink(models.Model):
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
@@ -82,4 +68,9 @@ class OrgOwnersLink(models.Model):
 
 class OrgAdminsLink(models.Model):
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+
+
+class UserReviewLink(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)

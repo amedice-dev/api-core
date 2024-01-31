@@ -41,6 +41,8 @@ class OrganisationPostSerializer(serializers.ModelSerializer):
 
 class OrganisationsSerializer(serializers.ModelSerializer):
     org_text_info_short = serializers.SerializerMethodField()
+    org_category = serializers.SerializerMethodField()
+    org_directions = serializers.SerializerMethodField()
 
     class Meta:
         model = Organisation
@@ -57,6 +59,25 @@ class OrganisationsSerializer(serializers.ModelSerializer):
 
     def get_org_text_info_short(self, obj) -> str | None:
         return obj.org_text_info[:200] + "..." if obj.org_text_info else None
+
+    def get_org_category(self, obj) -> str | None:
+        result = {
+            "id": obj.org_category.category_id,
+            "name": obj.org_category.name,
+            "slug": obj.org_category.slug,
+        }
+        return result if obj.org_category else ""
+
+    def get_org_directions(self, obj) -> list[dict]:
+        result = [
+            {
+                "id": direction.direction_id,
+                "name": direction.name,
+                "slug": direction.slug,
+            }
+            for direction in obj.org_directions.all()
+        ]
+        return result
 
 
 class OrganisationDetailSerializer(serializers.ModelSerializer):
