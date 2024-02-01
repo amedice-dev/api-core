@@ -160,7 +160,4 @@ class OrganisationDetailSerializer(BaseOrganisationSerializer):
                 "imo": org_socials_instance.imo,
                 "youtube": org_socials_instance.youtube,
             }
-
             return socials_data
-        else:
-            return None

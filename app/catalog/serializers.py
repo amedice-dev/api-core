@@ -16,7 +16,7 @@ class OrgCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrgCategory
-        fields = ["category_id", "name", "slug", "type"]
+        fields = ["category_id", "name", "slug", "type", "page_content"]
 
 
 class OrgDirectionSerializer(serializers.ModelSerializer):
@@ -25,3 +25,9 @@ class OrgDirectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrgDirection
         fields = ["direction_id", "name", "slug"]
+
+
+class CategoryPageContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrgCategory
+        fields = ["page_content"]

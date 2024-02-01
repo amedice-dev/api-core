@@ -1,4 +1,5 @@
 from django.db.models import Count
+from rest_framework.exceptions import NotFound
 from rest_framework.generics import GenericAPIView, ListCreateAPIView
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAdminUser
@@ -15,6 +16,7 @@ from .serializers import (
     OrgCategoryWithCountSerializer,
     OrgCategorySerializer,
     OrgDirectionSerializer,
+    CategoryPageContentSerializer
 )
 
 
@@ -109,4 +111,32 @@ class CategoryDirectionsView(GenericAPIView):
 
         # Serialize and return directions
         serializer = OrgDirectionSerializer(directions, many=True)
+        return Response(serializer.data)
+
+
+@extend_schema(
+    parameters=[CATEGORY_SLUG_PARAMETER],
+    responses={200: CategoryPageContentSerializer()}
+)
+class CategoryPageContentView(APIView):
+
+    permission_classes = (AllowAny,)
+    http_method_names = ["get"]
+
+    def get(self, request):
+        """Получение page_content категории по slug."""
+        category_slug = request.query_params.get("category_slug")
+
+        if not category_slug:
+            return Response(
+                {"error": "category_slug parameter is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            category = OrgCategory.objects.get(slug=category_slug)
+        except OrgCategory.DoesNotExist:
+            raise NotFound(detail="Категория с указанным slug не найдена")
+
+        serializer = CategoryPageContentSerializer(category)
         return Response(serializer.data)

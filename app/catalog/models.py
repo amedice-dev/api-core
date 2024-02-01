@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class OrgCategoryType(models.TextChoices):
     PRIVATE = "private"
     PUBLIC = "public"
@@ -13,6 +12,7 @@ class OrgCategory(models.Model):
     type = models.CharField(
         max_length=40, choices=OrgCategoryType.choices, db_index=True
     )
+    page_content = models.JSONField(blank=True, null=True)
 
 
 class OrgDirection(models.Model):

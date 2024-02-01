@@ -21,7 +21,12 @@ Authorization: Bearer {{admin_access_token}}
 {
     "name": "Медицинские центры",
     "slug": "med_centers",
-    "type": "private"
+    "type": "private",
+    "page_content": {
+        "seo_title": "Медицинские центры",
+        "seo_description": "Центры, в которых есть медицина",
+        "seo_content": "HTML тыры-пыры"
+    }
 }
 HTTP 201
 [Captures]
