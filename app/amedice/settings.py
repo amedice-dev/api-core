@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "doctors.apps.DoctorsConfig",
     "users.apps.UsersConfig",
     "reviews.apps.ReviewsConfig",
+    "socials.apps.SocialsConfig",
     "catalog.apps.CatalogConfig",
     "django.contrib.admin",
     "django.contrib.auth",

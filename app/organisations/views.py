@@ -19,6 +19,7 @@ from .serializers import (
     OrganisationsSerializer,
     OrganisationPostSerializer,
     OrganisationDetailSerializer,
+    OrganisationUpdateSerializer
 )
 from users.permissions import IsOwner, IsOrgAdmin, CanUpdateOrganisation
 
@@ -57,7 +58,7 @@ class OrganisationsViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return OrganisationDetailSerializer
         if self.action == "update" or self.action == "partial_update":
-            return OrganisationDetailSerializer
+            return OrganisationUpdateSerializer
         return super().get_serializer_class()
 
     def perform_create(self, serializer):

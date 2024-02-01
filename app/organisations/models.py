@@ -3,6 +3,8 @@ from django.db import models
 
 from catalog.models import OrgCategory, OrgDirection
 from doctors.models import Doctor
+from reviews.models import Review
+from socials.models import OrgSocials
 
 
 class Organisation(models.Model):
@@ -19,15 +21,9 @@ class Organisation(models.Model):
     org_local_landmark = models.CharField(max_length=100, blank=True, null=True)
     org_location = models.CharField(max_length=100, blank=True, null=True)
     org_legal_name = models.CharField(max_length=100, blank=True, null=True)
-    org_working_hours = models.CharField(max_length=100, blank=True, null=True)
+    org_working_hours = models.JSONField(blank=True, null=True)
     org_site_link = models.URLField(blank=True, null=True)
-    org_socials = models.ForeignKey(
-        "OrgSocials",
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name="org_socials",
-    )
+    org_socials = models.ForeignKey(OrgSocials, on_delete=models.SET_NULL, blank=True, null=True)
     org_photos = ArrayField(models.ImageField(upload_to="orgs"), blank=True, null=True)
     org_text_info = models.CharField(max_length=1000, blank=True, null=True)
     org_owner = models.ForeignKey(
@@ -49,30 +45,13 @@ class Organisation(models.Model):
     org_rating = models.DecimalField(
         max_digits=2, decimal_places=1, blank=True, null=True
     )
-    org_reviews = models.ForeignKey(
+    org_reviews = models.ManyToManyField(
         "reviews.Review",
-        on_delete=models.SET_NULL,
         blank=True,
-        null=True,
         related_name="org_reviews",
     )
     # org_views_counter = ...
     # org_clicks_counter = ...
-
-    def __str__(self):
-        return self.org_name
-
-
-class OrgSocials(models.Model):
-    whatsapp = models.CharField(max_length=100)
-    viber = models.CharField(max_length=100)
-    telegram = models.CharField(max_length=100)
-    instagram = models.CharField(max_length=100)
-    facebook = models.CharField(max_length=100)
-    vkontakte = models.CharField(max_length=100)
-    odnoklassniki = models.CharField(max_length=100)
-    imo = models.CharField(max_length=100)
-    youtube = models.CharField(max_length=100)
 
 
 class OrgOwnersLink(models.Model):
@@ -82,4 +61,9 @@ class OrgOwnersLink(models.Model):
 
 class OrgAdminsLink(models.Model):
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+
+
+class UserReviewLink(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)

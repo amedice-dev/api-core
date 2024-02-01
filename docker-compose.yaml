@@ -22,7 +22,7 @@ services:
       - POSTGRES_DB=amedice_dev
   hurl-runner:
     build: .
-    entrypoint: /bin/sh -c "sleep 15 && hurl --retry 5 --test --very-verbose /usr/src/app/hurl/*.hurl"
+    entrypoint: /bin/sh -c "sleep 20 && hurl --retry 5 --test --very-verbose /usr/src/app/hurl/*.hurl"
     depends_on:
       - web
       - db

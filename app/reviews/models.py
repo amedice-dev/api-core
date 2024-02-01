@@ -9,8 +9,3 @@ class Review(models.Model):
     review_text = models.TextField()
     review_grade = models.IntegerField()
     publication_date = models.DateTimeField(auto_now_add=True)
-
-
-class UserReviewLink(models.Model):
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)

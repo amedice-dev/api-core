@@ -9,6 +9,8 @@ urlpatterns = [
     path("catalog/", include("catalog.urls")),
     # organisations
     path("", include("organisations.urls")),
+    # social media
+    path("", include("socials.urls")),
     # doctors
     # path("", include("doctors.urls")),
     # admin panel
