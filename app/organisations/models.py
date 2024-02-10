@@ -50,6 +50,7 @@ class Organisation(models.Model):
         blank=True,
         related_name="org_reviews",
     )
+    updated_at = models.DateTimeField(auto_now=True)
     # org_views_counter = ...
     # org_clicks_counter = ...
 

@@ -86,6 +86,7 @@ class OrganisationsSerializer(BaseOrganisationSerializer):
 
 class OrganisationUpdateSerializer(serializers.ModelSerializer):
     org_working_hours = serializers.JSONField(validators=[validate_working_hours])
+    updated_at = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = Organisation
@@ -110,6 +111,7 @@ class OrganisationUpdateSerializer(serializers.ModelSerializer):
             "doctors_list",
             "org_category",
             "org_directions",
+            "updated_at"
         ]
 
 
@@ -117,6 +119,7 @@ class OrganisationDetailSerializer(BaseOrganisationSerializer):
     org_socials = serializers.SerializerMethodField(read_only=True)
     org_category = serializers.SerializerMethodField()
     org_directions = serializers.SerializerMethodField()
+    updated_at = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = Organisation
@@ -143,6 +146,7 @@ class OrganisationDetailSerializer(BaseOrganisationSerializer):
             "org_socials",
             "doctors_list",
             "org_reviews",
+            "updated_at"
         ]
 
     def get_org_socials(self, obj):
