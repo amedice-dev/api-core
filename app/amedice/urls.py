@@ -4,7 +4,8 @@ from rest_framework_simplejwt import views as jwt_views
 
 from users.views import UserRegistrationAPIView
 
-urlpatterns = [
+
+api_urlpatterns = [
     # catalog of categories and directions
     path("catalog/", include("catalog.urls")),
     # organisations
@@ -13,8 +14,6 @@ urlpatterns = [
     path("", include("socials.urls")),
     # doctors
     # path("", include("doctors.urls")),
-    # admin panel
-    path("admin", admin.site.urls),
     # users (temporary)
     path("", include("users.urls")),
     # authentication
@@ -28,6 +27,12 @@ urlpatterns = [
     path("auth/logout", jwt_views.TokenBlacklistView.as_view(), name="logout_user"),
     # swagger
     path("", include("spectacular.urls")),
+]
+
+urlpatterns = [
+    path("api/", include(api_urlpatterns)),
+    # admin panel
+    path("api/admin/", admin.site.urls),
     # debug toolbar
-    # path("__debug__/", include("debug_toolbar.urls")),
+    # path("api/__debug__/", include("debug_toolbar.urls")),
 ]

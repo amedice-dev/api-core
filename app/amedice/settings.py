@@ -20,7 +20,10 @@ if hosts:
     ALLOWED_HOSTS = hosts.split(" ")
 
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:1337",
+    "https://moon.vks-it.ru",
+]
 
 # Application definition
 INSTALLED_APPS = [

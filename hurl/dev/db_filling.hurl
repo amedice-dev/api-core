@@ -2,7 +2,7 @@
 # New Organisation`s Owner
 #######################################
 
-POST http://web:8000/auth/register
+POST http://web:8000/api/auth/register
 {
     "email": "owner@test.com",
     "password": "big_boss",
@@ -17,7 +17,7 @@ owner_id: jsonpath "$.id"
 owner_email: jsonpath "$.email"
 
 
-POST http://web:8000/auth/login
+POST http://web:8000/api/auth/login
 {
     "email": "owner@test.com",
     "password": "big_boss"
@@ -31,7 +31,7 @@ owner_refresh_token: jsonpath "$.refresh"
 # Get Categories
 #######################################
 
-GET http://web:8000/catalog/categories_tree
+GET http://web:8000/api/catalog/categories_tree
 HTTP 200
 [Captures]
 med_center_id: jsonpath "$[0].category_id"
@@ -69,7 +69,7 @@ jsonpath "$[13].slug" == "gos_dispensaries"
 # Get Directions
 #######################################
 
-GET http://web:8000/catalog/directions
+GET http://web:8000/api/catalog/directions
 HTTP 200
 [Captures]
 urology_id: jsonpath "$[0].direction_id"
@@ -115,7 +115,7 @@ jsonpath "$[17].slug" == "gynecology"
 # 40 New Organisations
 #######################################
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Dark Side Medical",
@@ -130,7 +130,7 @@ HTTP 201
 [Captures]
 org_id_1: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Sunrise Dental Clinic",
@@ -145,7 +145,7 @@ HTTP 201
 [Captures]
 org_id_2: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Tech Diagnostics",
@@ -160,7 +160,7 @@ HTTP 201
 [Captures]
 org_id_3: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Happy Kids Clinic",
@@ -175,7 +175,7 @@ HTTP 201
 [Captures]
 org_id_4: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Cosmetic Wellness Center",
@@ -190,7 +190,7 @@ HTTP 201
 [Captures]
 org_id_5: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "City Hospital",
@@ -205,7 +205,7 @@ HTTP 201
 [Captures]
 org_id_6: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Healthy Life Clinic",
@@ -220,7 +220,7 @@ HTTP 201
 [Captures]
 org_id_7: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Bright Eyes Clinic",
@@ -235,7 +235,7 @@ HTTP 201
 [Captures]
 org_id_8: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Dental Polyclinic",
@@ -250,7 +250,7 @@ HTTP 201
 [Captures]
 org_id_9: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Tech Dispensary",
@@ -265,7 +265,7 @@ HTTP 201
 [Captures]
 org_id_10: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Healthy Kids Hospital",
@@ -280,7 +280,7 @@ HTTP 201
 [Captures]
 org_id_11: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Cosmetic Bliss Center",
@@ -295,7 +295,7 @@ HTTP 201
 [Captures]
 org_id_12: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "City Maternity Hospital",
@@ -309,7 +309,7 @@ HTTP 201
 [Captures]
 org_id_13: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Urban Cosmetology Center",
@@ -324,7 +324,7 @@ HTTP 201
 [Captures]
 org_id_14: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Bright Eyes Clinic",
@@ -339,7 +339,7 @@ HTTP 201
 [Captures]
 org_id_15: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Dental Wellness Clinic",
@@ -354,7 +354,7 @@ HTTP 201
 [Captures]
 org_id_16: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Tech Diagnostics",
@@ -369,7 +369,7 @@ HTTP 201
 [Captures]
 org_id_17: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Happy Kids Clinic",
@@ -384,7 +384,7 @@ HTTP 201
 [Captures]
 org_id_18: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Cosmetic Wellness Center",
@@ -399,7 +399,7 @@ HTTP 201
 [Captures]
 org_id_19: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "City Hospital",
@@ -414,7 +414,7 @@ HTTP 201
 [Captures]
 org_id_20: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Healing Hands Medical Center",
@@ -429,7 +429,7 @@ HTTP 201
 [Captures]
 org_id_21: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Tech Care Laboratory",
@@ -444,7 +444,7 @@ HTTP 201
 [Captures]
 org_id_22: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Sunset Diagnostic Center",
@@ -459,7 +459,7 @@ HTTP 201
 [Captures]
 org_id_23: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Happy Kids Pediatrics",
@@ -474,7 +474,7 @@ HTTP 201
 [Captures]
 org_id_24: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Tech Wellness Center",
@@ -489,7 +489,7 @@ HTTP 201
 [Captures]
 org_id_25: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Eternal Beauty Cosmetology",
@@ -504,7 +504,7 @@ HTTP 201
 [Captures]
 org_id_26: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "City General Hospital",
@@ -519,7 +519,7 @@ HTTP 201
 [Captures]
 org_id_27: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Little Stars Kids Hospital",
@@ -534,7 +534,7 @@ HTTP 201
 [Captures]
 org_id_28: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Green Meadows Polyclinic",
@@ -549,7 +549,7 @@ HTTP 201
 [Captures]
 org_id_29: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Smile Dental Polyclinic",
@@ -564,7 +564,7 @@ HTTP 201
 [Captures]
 org_id_30: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Joyful Maternity Hospital",
@@ -578,7 +578,7 @@ HTTP 201
 [Captures]
 org_id_31: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Sunrise Dispensary",
@@ -593,7 +593,7 @@ HTTP 201
 [Captures]
 org_id_32: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Healthy Life Wellness",
@@ -608,7 +608,7 @@ HTTP 201
 [Captures]
 org_id_33: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Tech Lab Innovations",
@@ -623,7 +623,7 @@ HTTP 201
 [Captures]
 org_id_34: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Sunset Kids Clinic",
@@ -638,7 +638,7 @@ HTTP 201
 [Captures]
 org_id_35: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Eternal Youth Cosmetology",
@@ -653,7 +653,7 @@ HTTP 201
 [Captures]
 org_id_36: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "City Hospital",
@@ -668,7 +668,7 @@ HTTP 201
 [Captures]
 org_id_37: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Little Angels Kids Hospital",
@@ -683,7 +683,7 @@ HTTP 201
 [Captures]
 org_id_38: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Green Valley Polyclinic",
@@ -698,7 +698,7 @@ HTTP 201
 [Captures]
 org_id_39: jsonpath "$.org_id"
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Dental Bliss Polyclinic",
@@ -718,7 +718,7 @@ org_id_40: jsonpath "$.org_id"
 # Make Organisations "is_active"
 #######################################
 
-PATCH http://web:8000/organisations/1
+PATCH http://web:8000/api/organisations/1
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -727,7 +727,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/2
+PATCH http://web:8000/api/organisations/2
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -736,7 +736,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/3
+PATCH http://web:8000/api/organisations/3
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -745,7 +745,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/4
+PATCH http://web:8000/api/organisations/4
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -754,7 +754,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/5
+PATCH http://web:8000/api/organisations/5
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -763,7 +763,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/6
+PATCH http://web:8000/api/organisations/6
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -772,7 +772,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/7
+PATCH http://web:8000/api/organisations/7
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -781,7 +781,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/8
+PATCH http://web:8000/api/organisations/8
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -790,7 +790,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/9
+PATCH http://web:8000/api/organisations/9
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -799,7 +799,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/10
+PATCH http://web:8000/api/organisations/10
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -808,7 +808,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/11
+PATCH http://web:8000/api/organisations/11
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -817,7 +817,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/12
+PATCH http://web:8000/api/organisations/12
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -826,7 +826,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/13
+PATCH http://web:8000/api/organisations/13
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -835,7 +835,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/14
+PATCH http://web:8000/api/organisations/14
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -844,7 +844,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/15
+PATCH http://web:8000/api/organisations/15
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -853,7 +853,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/16
+PATCH http://web:8000/api/organisations/16
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -862,7 +862,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/17
+PATCH http://web:8000/api/organisations/17
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -871,7 +871,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/18
+PATCH http://web:8000/api/organisations/18
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -880,7 +880,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/19
+PATCH http://web:8000/api/organisations/19
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -889,7 +889,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/20
+PATCH http://web:8000/api/organisations/20
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -898,7 +898,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/21
+PATCH http://web:8000/api/organisations/21
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -907,7 +907,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/22
+PATCH http://web:8000/api/organisations/22
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -916,7 +916,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/23
+PATCH http://web:8000/api/organisations/23
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -925,7 +925,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/24
+PATCH http://web:8000/api/organisations/24
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -934,7 +934,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/25
+PATCH http://web:8000/api/organisations/25
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -943,7 +943,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/26
+PATCH http://web:8000/api/organisations/26
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -952,7 +952,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/27
+PATCH http://web:8000/api/organisations/27
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -961,7 +961,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/28
+PATCH http://web:8000/api/organisations/28
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -970,7 +970,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/29
+PATCH http://web:8000/api/organisations/29
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -979,7 +979,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/30
+PATCH http://web:8000/api/organisations/30
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -988,7 +988,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/31
+PATCH http://web:8000/api/organisations/31
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -997,7 +997,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/32
+PATCH http://web:8000/api/organisations/32
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -1006,7 +1006,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/33
+PATCH http://web:8000/api/organisations/33
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -1015,7 +1015,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/34
+PATCH http://web:8000/api/organisations/34
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -1024,7 +1024,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/35
+PATCH http://web:8000/api/organisations/35
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -1033,7 +1033,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/36
+PATCH http://web:8000/api/organisations/36
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -1042,7 +1042,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/37
+PATCH http://web:8000/api/organisations/37
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -1051,7 +1051,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/38
+PATCH http://web:8000/api/organisations/38
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -1060,7 +1060,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/39
+PATCH http://web:8000/api/organisations/39
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -1069,7 +1069,7 @@ HTTP 200
 [Asserts]
 jsonpath "$.is_active" == true
 
-PATCH http://web:8000/organisations/40
+PATCH http://web:8000/api/organisations/40
 Authorization: Bearer {{owner_access_token}}
 {
     "is_active": true
@@ -1082,7 +1082,7 @@ jsonpath "$.is_active" == true
 # Request Organisations with filters
 #######################################
 
-GET http://web:8000/organisations?page=1&page_size=1&org_category=med_centers
+GET http://web:8000/api/organisations?page=1&page_size=1&org_category=med_centers
 HTTP 200
 [Asserts]
 jsonpath "$.count" == 4
@@ -1090,15 +1090,15 @@ jsonpath "$.next" != null
 jsonpath "$.previous" == null
 jsonpath "$.results" count == 1
 
-GET http://web:8000/organisations?page=2&page_size=1&org_category=med_centers
+GET http://web:8000/api/organisations?page=2&page_size=1&org_category=med_centers
 HTTP 200
 [Asserts]
 jsonpath "$.count" == 4
-jsonpath "$.next" == "http://web:8000/organisations?org_category=med_centers&page=3&page_size=1"
+jsonpath "$.next" == "http://web:8000/api/organisations?org_category=med_centers&page=3&page_size=1"
 jsonpath "$.previous" != null
 jsonpath "$.results" count == 1
 
-GET http://web:8000/organisations?page=1&page_size=10
+GET http://web:8000/api/organisations?page=1&page_size=10
 HTTP 200
 [Asserts]
 jsonpath "$.count" == 40
@@ -1106,7 +1106,7 @@ jsonpath "$.next" != null
 jsonpath "$.previous" == null
 jsonpath "$.results" count == 10
 
-GET http://web:8000/organisations?page=1&page_size=10&org_category=cosmetology_centers
+GET http://web:8000/api/organisations?page=1&page_size=10&org_category=cosmetology_centers
 HTTP 200
 [Asserts]
 jsonpath "$.count" == 6
@@ -1114,7 +1114,7 @@ jsonpath "$.next" == null
 jsonpath "$.previous" == null
 jsonpath "$.results" count == 6
 
-GET http://web:8000/organisations?page=1&page_size=10&org_direction=gynecology&org_category=cosmetology_centers
+GET http://web:8000/api/organisations?page=1&page_size=10&org_direction=gynecology&org_category=cosmetology_centers
 HTTP 200
 [Asserts]
 jsonpath "$.count" == 3
@@ -1126,7 +1126,7 @@ jsonpath "$.results" count == 3
 # Description len test
 #######################################
 
-PATCH http://web:8000/organisations/1
+PATCH http://web:8000/api/organisations/1
 Authorization: Bearer {{owner_access_token}}
 {
     "org_text_info": "Медицинский центр 'Dark Side Medical' предоставляет высококачественные медицинские услуги, объединяя опыт врачей с современными технологиями. Наша миссия - забота о вашем здоровье. Врачи с различными специализациями обеспечивают комплексное лечение, а дружелюбная атмосфера создает комфортное окружение для пациентов."
@@ -1137,7 +1137,7 @@ HTTP 200
 # New Full Organisation
 #######################################
 
-POST http://web:8000/organisations
+POST http://web:8000/api/organisations
 Authorization: Bearer {{owner_access_token}}
 {
     "org_name": "Медицинский центр МедТести XXI",
@@ -1147,9 +1147,8 @@ Authorization: Bearer {{owner_access_token}}
 }
 HTTP 201
 
-POST http://web:8000/socials
+POST http://web:8000/api/socials
 Authorization: Bearer {{owner_access_token}}
-
 {
     "whatsapp": "+998781482288",
     "viber": null,
@@ -1165,7 +1164,7 @@ HTTP 201
 [Captures]
 org_socials_id: jsonpath "$.id"
 
-PATCH http://web:8000/organisations/41
+PATCH http://web:8000/api/organisations/41
 Authorization: Bearer {{owner_access_token}}
 {
     "org_main_phone": null,
