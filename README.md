@@ -39,7 +39,7 @@ docker login
 ```
 Сборка
 ```shell
-docker build -t api-core:<тег> . --no-cache
+docker build -t api-core:<тег> -f Dockerfile.prod . --no-cache
 ```
 Новый тег образа
 ```shell

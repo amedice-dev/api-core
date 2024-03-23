@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, Q
 from rest_framework.exceptions import NotFound
 from rest_framework.generics import GenericAPIView, ListCreateAPIView
 from rest_framework.views import APIView
@@ -16,7 +16,7 @@ from .serializers import (
     OrgCategoryWithCountSerializer,
     OrgCategorySerializer,
     OrgDirectionSerializer,
-    CategoryPageContentSerializer
+    CategoryPageContentSerializer,
 )
 
 
@@ -63,9 +63,10 @@ class CategoriesTreeView(APIView):
 
     def get(self, request):
         """Получение списка категорий с количество организаций в каждой из них."""
-        categories = OrgCategory.objects.annotate(count=Count("organisation")).order_by(
-            "category_id"
-        )
+        categories = OrgCategory.objects.annotate(
+            count=Count("organisation", filter=Q(organisation__is_active=True))
+        ).order_by("category_id")
+
         serializer = OrgCategoryWithCountSerializer(categories, many=True)
         return Response(serializer.data)
 
@@ -116,10 +117,9 @@ class CategoryDirectionsView(GenericAPIView):
 
 @extend_schema(
     parameters=[CATEGORY_SLUG_PARAMETER],
-    responses={200: CategoryPageContentSerializer()}
+    responses={200: CategoryPageContentSerializer()},
 )
 class CategoryPageContentView(APIView):
-
     permission_classes = (AllowAny,)
     http_method_names = ["get"]
 
