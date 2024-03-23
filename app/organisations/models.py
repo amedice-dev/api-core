@@ -1,7 +1,6 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils.text import slugify
-from django.db.models import Max
 from transliterate import translit
 
 from catalog.models import OrgCategory, OrgDirection
@@ -72,6 +71,9 @@ class Organisation(models.Model):
                 pass
 
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.org_slug
 
 
 class OrgOwnersLink(models.Model):

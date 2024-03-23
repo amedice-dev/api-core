@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class OrgCategoryType(models.TextChoices):
     PRIVATE = "private"
     PUBLIC = "public"
@@ -14,8 +15,14 @@ class OrgCategory(models.Model):
     )
     page_content = models.JSONField(blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class OrgDirection(models.Model):
     direction_id = models.AutoField(primary_key=True, db_index=True)
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, unique=True, db_index=True)
+
+    def __str__(self):
+        return self.name
