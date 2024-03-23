@@ -29,6 +29,7 @@ class BaseOrganisationSerializer(serializers.ModelSerializer):
             for direction in obj.org_directions.all()
         ]
 
+
 class OrganisationPostSerializer(serializers.ModelSerializer):
     # Defining org_id as a read-only field
     org_id = serializers.IntegerField(read_only=True)
@@ -49,17 +50,6 @@ class OrganisationPostSerializer(serializers.ModelSerializer):
         if self.context["request"].method == "GET":
             ret["org_id"] = instance.org_id
         return ret
-
-    def save(self, **kwargs):
-        # Generating org_slug from transliterated org_name and org_id
-        org_name = self.validated_data["org_name"]
-        max_org_id = Organisation.objects.aggregate(Max("org_id"))["org_id__max"] or 0
-        org_id = max_org_id + 1
-        org_name_translit = translit(org_name, "ru", reversed=True)
-        org_slug = slugify(f"{org_id}-{org_name_translit}")
-        self.validated_data["org_slug"] = org_slug
-
-        return super().save(**kwargs)
 
 
 class OrganisationsSerializer(BaseOrganisationSerializer):

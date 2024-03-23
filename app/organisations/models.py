@@ -1,5 +1,8 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.utils.text import slugify
+from django.db.models import Max
+from transliterate import translit
 
 from catalog.models import OrgCategory, OrgDirection
 from doctors.models import Doctor
@@ -51,8 +54,24 @@ class Organisation(models.Model):
         related_name="org_reviews",
     )
     updated_at = models.DateTimeField(auto_now=True)
-    # org_views_counter = ...
-    # org_clicks_counter = ...
+
+    def save(self, *args, **kwargs):
+        if not self.org_slug:
+            max_org_id = Organisation.objects.aggregate(models.Max("org_id"))["org_id__max"] or 0
+            org_id = max_org_id + 1
+            org_name_translit = translit(self.org_name, "ru", reversed=True)
+            self.org_slug = slugify(f"{org_id}-{org_name_translit}")
+
+        else:
+            try:
+                old_org_name = Organisation.objects.filter(org_id=self.org_id).values_list('org_name', flat=True).first()
+                if old_org_name and self.org_name != old_org_name:
+                    org_name_translit = translit(self.org_name, "ru", reversed=True)
+                    self.org_slug = slugify(f"{self.org_id}-{org_name_translit}")
+            except Organisation.DoesNotExist:
+                pass
+
+        super().save(*args, **kwargs)
 
 
 class OrgOwnersLink(models.Model):
