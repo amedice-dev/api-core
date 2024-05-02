@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "secret-key-for-project")
 
-DEBUG = bool(os.environ.get("DEBUG", default=1))
+DEBUG = bool(os.environ.get("DEBUG", default=False))
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
@@ -27,12 +27,13 @@ CSRF_TRUSTED_ORIGINS = [
 
 # Application definition
 INSTALLED_APPS = [
-    "organisations.apps.OrganisationsConfig",
-    "doctors.apps.DoctorsConfig",
-    "users.apps.UsersConfig",
-    "reviews.apps.ReviewsConfig",
-    "socials.apps.SocialsConfig",
-    "catalog.apps.CatalogConfig",
+    "apps.organisations.apps.OrganisationsConfig",
+    "apps.doctors.apps.DoctorsConfig",
+    "apps.images.apps.ImagesConfig",
+    "apps.users.apps.UsersConfig",
+    "apps.reviews.apps.ReviewsConfig",
+    "apps.socials.apps.SocialsConfig",
+    "apps.catalog.apps.CatalogConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3rd party apps
     # "debug_toolbar",
+    "multiupload",
     "corsheaders",
     "rest_framework",
     "drf_yasg",
@@ -96,12 +98,6 @@ DATABASES = {
 # Custom User model
 AUTH_USER_MODEL = "users.User"
 
-# LOGIN_URL =
-
-# LOGIN_REDIRECT_URL =
-
-# LOGOUT_URL =
-
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -120,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru"
 
 TIME_ZONE = "Asia/Tashkent"
 
