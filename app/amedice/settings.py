@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3rd party apps
     # "debug_toolbar",
-    "multiupload",
     "corsheaders",
     "rest_framework",
     "drf_yasg",
