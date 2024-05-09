@@ -5,6 +5,9 @@ from django.urls import include, path
 from rest_framework_simplejwt import views as jwt_views
 
 from apps.users.views import UserRegistrationAPIView
+from .config import get_settings
+
+config = get_settings()
 
 
 api_urlpatterns = [
@@ -40,12 +43,18 @@ api_urlpatterns = [
     path("", include("spectacular.urls")),
 ]
 
+debug_urlpatterns = [
+    # debug toolbar
+    path("__debug__/", include("debug_toolbar.urls")),
+]
+
 urlpatterns = [
     path("api/", include(api_urlpatterns)),
     # admin panel
-    path("api/admin/", admin.site.urls),
-    # debug toolbar
-    # path("api/__debug__/", include("debug_toolbar.urls")),
+    path("admin/", admin.site.urls),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if config.application.debug:
+    urlpatterns += debug_urlpatterns
