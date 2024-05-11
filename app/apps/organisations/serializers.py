@@ -54,6 +54,7 @@ class OrganisationsSerializer(BaseOrganisationSerializer):
     org_text_info_short = serializers.SerializerMethodField()
     org_category = serializers.SerializerMethodField()
     org_directions = serializers.SerializerMethodField()
+    org_logo = OrgLogoSerializer(read_only=True)
 
     class Meta:
         model = Organisation
@@ -64,7 +65,7 @@ class OrganisationsSerializer(BaseOrganisationSerializer):
             "org_category",
             "org_directions",
             "org_local_address",
-            # "org_logo",
+            "org_logo",
             "org_text_info_short",
         ]
 
@@ -75,7 +76,6 @@ class OrganisationsSerializer(BaseOrganisationSerializer):
 class OrganisationUpdateSerializer(serializers.ModelSerializer):
     org_working_hours = serializers.JSONField(validators=[validate_working_hours])
     updated_at = serializers.DateTimeField(read_only=True)
-    # org_socials = serializers.SerializerMethodField()
 
     class Meta:
         model = Organisation
@@ -85,7 +85,6 @@ class OrganisationUpdateSerializer(serializers.ModelSerializer):
             "org_slug",
             "org_local_phone",
             "org_main_phone",
-            # "org_logo",
             "org_url",
             "org_local_address",
             "org_local_landmark",
@@ -93,19 +92,14 @@ class OrganisationUpdateSerializer(serializers.ModelSerializer):
             "org_legal_name",
             "org_working_hours",
             "org_site_link",
-            # "org_photos",
             "org_text_info",
             "is_active",
             "org_socials",
-            # "doctors_list",
             "org_category",
             "org_directions",
             "updated_at"
         ]
 
-    # def get_org_socials(self, obj):
-    #     return obj.org_socials.all()
-    #
 
 class OrganisationDetailSerializer(BaseOrganisationSerializer):
     org_category = serializers.SerializerMethodField()

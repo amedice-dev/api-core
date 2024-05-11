@@ -51,7 +51,7 @@ debug_urlpatterns = [
 urlpatterns = [
     path("api/", include(api_urlpatterns)),
     # admin panel
-    path("admin/", admin.site.urls),
+    path("control-panel/", admin.site.urls),
 
 ]
 

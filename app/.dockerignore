@@ -1,3 +1,5 @@
 .idea
-pytest.ini
+*.ini
 .dockerignore
+mediafiles
+staticfiles
