@@ -2,58 +2,53 @@
 
 Это основное приложение (backend) агрегатора медицинских центров.
 
-[//]: # (## Запуск dev-версии приложения)
+## Запуск dev-версии приложения
 
-[//]: # ()
-[//]: # (Клонировать репозиторий)
+Зависимости
 
-[//]: # (```)
+1. [docker](https://www.docker.com)
+2. [poetry](https://python-poetry.org)
 
-[//]: # ($ git clone git@github.com:amedice-dev/api-core.git)
 
-[//]: # (```)
+Запуск базы данных
 
-[//]: # ()
-[//]: # (Зависимости)
+```shell
+docker compose up -d --build
+```
 
-[//]: # (1. run [docker]&#40;https://www.docker.com&#41;)
+Копировать и изменить `config.yaml`, в соответсвии с параметрами базы данных
+```shell
+cp config.yaml.template /app/etc/config/config.yaml
+```
 
-[//]: # ()
-[//]: # (Запуск )
+Статика, миграции, root-пользователь
 
-[//]: # (```shell)
+```shell
+make dev-deps
+```
+Запуск приложения
 
-[//]: # (docker compose up -d --build)
+```shell
+make run-app
+```
 
-[//]: # (```)
+Наполнение базы данных
+```shell
+make db-filling
+```
 
-[//]: # ()
-[//]: # (Просмотр документации)
+Просмотр документации
 
-[//]: # (```)
+[Swagger Documentation](http://localhost:8000/api/doc/swagger) | [ReDoc Documentation](http://localhost:8000/api/doc/redoc)
 
-[//]: # (http://localhost:8000/api/doc/swagger)
 
-[//]: # (```)
+Остановка приложения
 
-[//]: # (or)
+```shell
+docker compose down
+```
 
-[//]: # (```)
-
-[//]: # (http://localhost:8000/api/doc/redoc)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # (Остановка приложения)
-
-[//]: # (```shell)
-
-[//]: # (docker compose down)
-
-[//]: # (```)
-
-## Сброрка и отправка образа в Docker hub
+## Сброрка и отправка образа в Docker hub (пока ручками)
 
 Авторизация
 ```shell
