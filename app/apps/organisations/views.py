@@ -66,10 +66,10 @@ class OrganisationsViewSet(viewsets.ModelViewSet):
         serializer.validated_data["org_owner"] = self.request.user
         serializer.save()
 
-        # Add the new organisation's ID to the current user's organisations_list
-        org_id = serializer.instance.org_id
-        self.request.user.organisations_list.add(org_id)
-        self.request.user.save()
+        # # Add the new organisation's ID to the current user's organisations_list
+        # org_id = serializer.instance.org_id
+        # self.request.user.organisations_list.add(org_id)
+        # self.request.user.save()
 
     @extend_schema(
         parameters=[

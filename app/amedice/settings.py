@@ -1,29 +1,22 @@
 import os
+import dj_database_url
 from datetime import timedelta
 from pathlib import Path
 
 from django.urls import reverse_lazy
+from .config import get_settings
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+settings = get_settings()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get("SECRET_KEY", "secret-key-for-project")
+SECRET_KEY = settings.application.secret_key
 
-DEBUG = bool(os.environ.get("DEBUG", default=False))
+DEBUG = settings.application.debug
 
-# 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
-# For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0"]
+ALLOWED_HOSTS = settings.application.allowed_hosts
 
-hosts = os.environ.get("DJANGO_ALLOWED_HOSTS")
-if hosts:
-    ALLOWED_HOSTS = hosts.split(" ")
-
-
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:1337",
-    "https://moon.vks-it.ru",
-]
+CSRF_TRUSTED_ORIGINS = settings.application.csrf_trusted
 
 # Application definition
 INSTALLED_APPS = [
@@ -41,7 +34,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # 3rd party apps
-    # "debug_toolbar",
+    "debug_toolbar",
     "corsheaders",
     "rest_framework",
     "drf_yasg",
@@ -52,7 +45,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    # "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -84,14 +77,10 @@ WSGI_APPLICATION = "amedice.wsgi.application"
 
 # Database
 DATABASES = {
-    "default": {
-        "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.postgresql_psycopg2"),
-        "NAME": os.environ.get("DB_NAME", "db_dev"),
-        "USER": os.environ.get("DB_USER", "postgres"),
-        "PASSWORD": os.environ.get("DB_PASSWORD", "example"),
-        "HOST": os.environ.get("DB_HOST", "localhost"),
-        "PORT": os.environ.get("DB_PORT", "5432"),
-    }
+    "default": dj_database_url.config(
+        default=settings.database.url, engine=settings.database.engine,
+        conn_max_age=settings.database.conn_max_age, conn_health_checks=settings.database.conn_health_check
+    ),
 }
 
 # Custom User model
@@ -115,9 +104,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-LANGUAGE_CODE = "ru"
+LANGUAGE_CODE = settings.application.language
 
-TIME_ZONE = "Asia/Tashkent"
+TIME_ZONE = settings.application.timezone
 
 USE_I18N = True
 
@@ -145,8 +134,8 @@ REST_FRAMEWORK = {
 
 # JWT
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ACCESS_TOKEN_LIFETIME": settings.application.access_token_lifetime,
+    "REFRESH_TOKEN_LIFETIME": settings.application.refresh_token_lifetime,
 }
 
 # DRF Spectacular Settings
@@ -166,23 +155,23 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 # Debug Toolbar
-# if DEBUG:
-#     LOGGING = {
-#         "version": 1,
-#         "disable_existing_loggers": False,
-#         "handlers": {
-#             "console": {
-#                 "class": "logging.StreamHandler",
-#             },
-#         },
-#         "loggers": {
-#             "django.db.backends": {
-#                 "handlers": ["console"],
-#                 "level": "DEBUG",
-#             },
-#         },
-#     }
-#
-#     DEBUG_TOOLBAR_CONFIG = {
-#         "SHOW_TOOLBAR_CALLBACK": lambda request: True,
-#     }
+if DEBUG:
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+            },
+        },
+        "loggers": {
+            "django.db.backends": {
+                "handlers": ["console"],
+                "level": "DEBUG",
+            },
+        },
+    }
+
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+    }

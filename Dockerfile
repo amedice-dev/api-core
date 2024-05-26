@@ -1,32 +1,27 @@
-# pull official base image
-FROM python:3.11-alpine
+# Base image
+FROM python:3.11.4-slim-buster
 
-# set work directory
-WORKDIR /usr/src/app
+ENV PYTHONFAULTHANDLER=1 \
+  PYTHONUNBUFFERED=1 \
+  PYTHONHASHSEED=random \
+  PIP_NO_CACHE_DIR=off \
+  PIP_DISABLE_PIP_VERSION_CHECK=on \
+  PIP_DEFAULT_TIMEOUT=100 \
+  POETRY_VERSION=1.5.1
 
-# set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# System deps:
+RUN pip install --upgrade --progress-bar off pip && pip install --progress-bar off "poetry==$POETRY_VERSION"
 
-# install system dependencies
-RUN apk add --no-cache netcat-openbsd
-RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing hurl
+# Copy only requirements to cache them in docker layer
+WORKDIR /
+COPY poetry.lock pyproject.toml /
 
-# install dependencies
-RUN pip install --upgrade pip
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+# Project initialization:
+RUN poetry config virtualenvs.create false \
+  && poetry install --no-interaction --no-ansi --only main
 
-# copy entrypoint.sh
-COPY ./entrypoint.sh .
-RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.sh
-RUN chmod +x /usr/src/app/entrypoint.sh
+WORKDIR app/
+COPY ./app /app
 
-# copy the app folder
-COPY app .
-
-# copy the hurl folder
-COPY hurl/dev ./hurl
-
-# run entrypoint.sh
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+# Создаем папки для static и mediafiles
+RUN mkdir -p /app/staticfiles /app/mediafiles

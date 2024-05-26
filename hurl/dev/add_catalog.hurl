@@ -2,7 +2,7 @@
 # Superuser Auth
 #######################################
 
-POST http://web:8000/api/auth/login
+POST {{URL}}/api/auth/login
 {
     "email": "admin@test.com",
     "password": "admin_Root"
@@ -16,7 +16,7 @@ admin_refresh_token: jsonpath "$.refresh"
 # Create Categories
 #######################################
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Медицинские центры",
@@ -32,7 +32,7 @@ HTTP 201
 [Captures]
 med_centers_id: jsonpath "$.category_id"
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Лаборатории",
@@ -43,7 +43,7 @@ HTTP 201
 [Captures]
 laboratories_id: jsonpath "$.category_id"
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Стоматологические клиники",
@@ -54,7 +54,7 @@ HTTP 201
 [Captures]
 dental_clinics_id: jsonpath "$.category_id"
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Диагностические центры",
@@ -65,7 +65,7 @@ HTTP 201
 [Captures]
 diagnostic_centers_id: jsonpath "$.category_id"
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Офтальмологические клиники",
@@ -76,7 +76,7 @@ HTTP 201
 [Captures]
 eye_clinics_id: jsonpath "$.category_id"
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Детские клиники",
@@ -87,7 +87,7 @@ HTTP 201
 [Captures]
 kids_clinics_id: jsonpath "$.category_id"
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Косметологические центры",
@@ -98,7 +98,7 @@ HTTP 201
 [Captures]
 cosmetology_centers_id: jsonpath "$.category_id"
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Госпитали",
@@ -109,7 +109,7 @@ HTTP 201
 [Captures]
 gos_hospitals_id: jsonpath "$.category_id"
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Амбулатории",
@@ -120,7 +120,7 @@ HTTP 201
 [Captures]
 gos_ambulatories_id: jsonpath "$.category_id"
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Детские госпитали",
@@ -131,7 +131,7 @@ HTTP 201
 [Captures]
 gos_kids_hospitals_id: jsonpath "$.category_id"
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Госполиклиники",
@@ -142,7 +142,7 @@ HTTP 201
 [Captures]
 gos_polyclinics_id: jsonpath "$.category_id"
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Государственные стоматологические поликлиники",
@@ -153,7 +153,7 @@ HTTP 201
 [Captures]
 gos_dental_polyclinics_id: jsonpath "$.category_id"
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Государственные роддомы",
@@ -164,7 +164,7 @@ HTTP 201
 [Captures]
 gos_maternity_hospitals_id: jsonpath "$.category_id"
 
-POST http://web:8000/api/catalog/categories
+POST {{URL}}/api/catalog/categories
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Диспансеры",
@@ -179,7 +179,7 @@ gos_dispensaries_id: jsonpath "$.category_id"
 # Create Directions
 #######################################
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Урология",
@@ -189,7 +189,7 @@ HTTP 201
 [Captures]
 urology_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Терапия",
@@ -199,7 +199,7 @@ HTTP 201
 [Captures]
 therapy_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Стоматология",
@@ -209,7 +209,7 @@ HTTP 201
 [Captures]
 dentistry_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Дерматология",
@@ -219,7 +219,7 @@ HTTP 201
 [Captures]
 dermatology_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Неврология",
@@ -229,7 +229,7 @@ HTTP 201
 [Captures]
 neurology_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Косметология",
@@ -239,7 +239,7 @@ HTTP 201
 [Captures]
 cosmetology_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Венерология",
@@ -249,7 +249,7 @@ HTTP 201
 [Captures]
 venereology_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Ортопедия",
@@ -259,7 +259,7 @@ HTTP 201
 [Captures]
 orthopedics_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Физиотерапия",
@@ -269,7 +269,7 @@ HTTP 201
 [Captures]
 physiotherapy_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Хирургия",
@@ -279,7 +279,7 @@ HTTP 201
 [Captures]
 surgery_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Эндокринология",
@@ -289,7 +289,7 @@ HTTP 201
 [Captures]
 endocrinology_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Онкология",
@@ -299,7 +299,7 @@ HTTP 201
 [Captures]
 oncology_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Педиатрия",
@@ -309,7 +309,7 @@ HTTP 201
 [Captures]
 pediatrics_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Кардиология",
@@ -319,7 +319,7 @@ HTTP 201
 [Captures]
 cardiology_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Отоларингология",
@@ -329,7 +329,7 @@ HTTP 201
 [Captures]
 oto_rhino_laryngology_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Психиатрия",
@@ -339,7 +339,7 @@ HTTP 201
 [Captures]
 psychiatry_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Офтальмология",
@@ -349,7 +349,7 @@ HTTP 201
 [Captures]
 ophthalmology_id: jsonpath "$.direction_id"
 
-POST http://web:8000/api/catalog/directions
+POST {{URL}}/api/catalog/directions
 Authorization: Bearer {{admin_access_token}}
 {
     "name": "Гинекология",

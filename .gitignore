@@ -8,5 +8,7 @@ __pycache__/
 *.pyc
 .DS_Store
 .ruff_cache
-.yaml
 app/mediafiles
+app/staticfiles
+app/etc/config/*
+app/etc/secrets/*
