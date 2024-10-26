@@ -8,7 +8,7 @@ from apps.users.views import UserRegistrationAPIView
 from .config import get_settings
 
 config = get_settings()
-
+debug = config.application.debug
 
 api_urlpatterns = [
     # catalog of categories and directions
@@ -38,10 +38,13 @@ api_urlpatterns = [
         name="token_refresh",
     ),
     path("auth/logout", jwt_views.TokenBlacklistView.as_view(), name="logout_user"),
-
-    # swagger
-    path("", include("spectacular.urls")),
 ]
+
+if debug:
+    # swagger
+    api_urlpatterns += [
+        path("", include("spectacular.urls")),
+    ]
 
 debug_urlpatterns = [
     # debug toolbar
@@ -57,5 +60,5 @@ urlpatterns = [
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-if config.application.debug:
+if debug:
     urlpatterns += debug_urlpatterns

@@ -8,6 +8,7 @@ from apps.images.models import OrgPhoto, OrgLogo
 class OrgPhotoInline(admin.TabularInline):
     model = OrgPhoto
     extra = 1
+    max_num = 8
 
 
 class OrgLogoInline(admin.TabularInline):
