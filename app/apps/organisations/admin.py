@@ -4,6 +4,7 @@ from django.utils.html import mark_safe
 
 from .models import Organisation
 from apps.images.models import Image
+from apps.catalog.models import OrgDirection
 
 
 class OrgPhotoInline(admin.TabularInline):
@@ -62,6 +63,16 @@ class OrganisationAdminForm(forms.ModelForm):
     class Meta:
         model = Organisation
         fields = '__all__'
+
+    org_directions = forms.ModelMultipleChoiceField(
+        queryset=OrgDirection.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'checkbox-multiple-columns'})
+    )
+
+    class Media:
+        css = {
+            'all': ('organisations/admin_custom.css',)
+        }
 
 
 class OrganisationAdmin(admin.ModelAdmin):
