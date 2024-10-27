@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from drf_spectacular.utils import extend_schema
 
-from .models import OrgPhoto, OrgLogo, DoctorAvatar, UserAvatar
+from .models import Image
 from .schema_parameters import ORG_ID_PARAMETER, DOCTOR_ID_PARAMETER, USER_ID_PARAMETER
 from .serializers import OrgPhotoSerializer, OrgLogoSerializer, DoctorAvatarSerializer, UserAvatarSerializer
 
@@ -20,10 +20,14 @@ class OrgPhotoListAPIView(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         org_id = self.kwargs.get('org_id')
         try:
-            queryset = OrgPhoto.objects.filter(org_id=org_id)
-            serializer = OrgPhotoSerializer(queryset, many=True)
-            return Response(serializer.data)
-        except OrgPhoto.DoesNotExist:
+            queryset = Image.objects.filter(org_id=org_id, content_type='org_photo').order_by('order')
+            if queryset.exists():
+                serializer = OrgPhotoSerializer(queryset, many=True)
+                return Response(serializer.data)
+            else:
+                return Response({"error": "Фотографий для указанного ID организации не существует."},
+                                status=status.HTTP_404_NOT_FOUND)
+        except Image.DoesNotExist:
             return Response({"error": "Фотографий для указанного ID организации не существует."},
                             status=status.HTTP_404_NOT_FOUND)
 
@@ -40,11 +44,13 @@ class OrgLogoRetrieveAPIView(generics.RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         org_id = self.kwargs.get('org_id')
         try:
-            serializer = OrgLogoSerializer(OrgLogo.objects.get(org_id=org_id))
+            logo = Image.objects.get(org_id=org_id, content_type='org_logo')
+            serializer = OrgLogoSerializer(logo)
             return Response(serializer.data)
-        except OrgLogo.DoesNotExist:
+        except Image.DoesNotExist:
             return Response({"error": "Логотипа для указанного ID организации не существует."},
                             status=status.HTTP_404_NOT_FOUND)
+
 
 @extend_schema(
     parameters=[
@@ -58,9 +64,10 @@ class DoctorAvatarRetrieveAPIView(generics.RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         doc_id = self.kwargs.get('doc_id')
         try:
-            serializer = DoctorAvatarSerializer(DoctorAvatar.objects.get(doc_id=doc_id))
+            avatar = Image.objects.get(doctor_id=doc_id, content_type='doctor_avatar')
+            serializer = DoctorAvatarSerializer(avatar)
             return Response(serializer.data)
-        except DoctorAvatar.DoesNotExist:
+        except Image.DoesNotExist:
             return Response({"error": "Аватара для указанного ID доктора не существует."},
                             status=status.HTTP_404_NOT_FOUND)
 
@@ -77,8 +84,9 @@ class UserAvatarRetrieveAPIView(generics.RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         user_id = self.kwargs.get('user_id')
         try:
-            serializer = UserAvatarSerializer(UserAvatar.objects.get(user_id=user_id))
+            avatar = Image.objects.get(user_id=user_id, content_type='user_avatar')
+            serializer = UserAvatarSerializer(avatar)
             return Response(serializer.data)
-        except UserAvatar.DoesNotExist:
+        except Image.DoesNotExist:
             return Response({"error": "Аватара для указанного ID пользователя не существует."},
                             status=status.HTTP_404_NOT_FOUND)

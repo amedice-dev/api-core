@@ -6,7 +6,6 @@ from django.contrib.auth.models import (
 )
 from django.db import models
 
-from apps.images.models import UserAvatar
 from apps.users.groups import create_groups
 
 

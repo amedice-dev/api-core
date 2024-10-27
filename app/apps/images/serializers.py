@@ -1,26 +1,26 @@
 from rest_framework import serializers
-from .models import OrgPhoto, OrgLogo, DoctorAvatar, UserAvatar
+from .models import Image
 
 
 class OrgPhotoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OrgPhoto
+        model = Image
         fields = ['id', 'image']
 
 
 class OrgLogoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OrgLogo
+        model = Image
         fields = '__all__'
 
 
 class DoctorAvatarSerializer(serializers.ModelSerializer):
     class Meta:
-        model = DoctorAvatar
+        model = Image
         fields = '__all__'
 
 
 class UserAvatarSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserAvatar
+        model = Image
         fields = '__all__'
