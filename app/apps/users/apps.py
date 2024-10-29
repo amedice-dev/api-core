@@ -6,4 +6,4 @@ class UsersConfig(AppConfig):
     name = "apps.users"
 
     def ready(self):
-        import apps.users.groups  # ignore
+        import apps.users.groups  # noqa: F401

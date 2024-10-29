@@ -1,22 +1,20 @@
+from apps.organisations.models import Organisation
 from django.db.models import Count, Q
+from drf_spectacular.utils import extend_schema
+from rest_framework import status
 from rest_framework.exceptions import NotFound
 from rest_framework.generics import GenericAPIView, ListCreateAPIView
-from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
-from rest_framework import status
-from drf_spectacular.utils import extend_schema
+from rest_framework.views import APIView
 
-from .schema_parameters import (
-    CATEGORY_SLUG_PARAMETER,
-)
-from apps.organisations.models import Organisation
 from .models import OrgCategory, OrgDirection
+from .schema_parameters import CATEGORY_SLUG_PARAMETER
 from .serializers import (
-    OrgCategoryWithCountSerializer,
-    OrgCategorySerializer,
-    OrgDirectionSerializer,
     CategoryPageContentSerializer,
+    OrgCategorySerializer,
+    OrgCategoryWithCountSerializer,
+    OrgDirectionSerializer,
 )
 
 

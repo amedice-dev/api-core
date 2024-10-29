@@ -1,14 +1,11 @@
+from apps.users.groups import create_groups
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
-    PermissionsMixin,
     Group,
+    PermissionsMixin,
 )
 from django.db import models
-
-from apps.images.models import UserAvatar
-from apps.users.groups import create_groups
-
 
 create_groups()
 

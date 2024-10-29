@@ -1,8 +1,8 @@
+from apps.organisations.models import Organisation
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 from .types import DocDirectionsType
-from apps.organisations.models import Organisation
 
 
 class Doctor(models.Model):
@@ -17,4 +17,4 @@ class Doctor(models.Model):
     )
     doc_rating = models.DecimalField(max_digits=2, decimal_places=1)
 
-    organisations = models.ManyToManyField(Organisation, related_name='doctors')
+    organisations = models.ManyToManyField(Organisation, related_name="doctors")

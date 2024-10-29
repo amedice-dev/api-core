@@ -1,8 +1,7 @@
-from django.db import models
-
-from apps.users.models import User
-from apps.organisations.models import Organisation
 from apps.doctors.models import Doctor
+from apps.organisations.models import Organisation
+from apps.users.models import User
+from django.db import models
 
 
 class Review(models.Model):
@@ -14,10 +13,14 @@ class Review(models.Model):
 
 
 class OrganisationReview(models.Model):
-    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, related_name='org_reviews')
+    organisation = models.ForeignKey(
+        Organisation, on_delete=models.CASCADE, related_name="org_reviews"
+    )
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
 
 
 class DoctorReview(models.Model):
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='doctor_reviews')
+    doctor = models.ForeignKey(
+        Doctor, on_delete=models.CASCADE, related_name="doctor_reviews"
+    )
     review = models.ForeignKey(Review, on_delete=models.CASCADE)

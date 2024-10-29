@@ -1,0 +1,10 @@
+.checkbox-multiple-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.checkbox-multiple-columns label {
+    display: flex;
+    align-items: center;
+}

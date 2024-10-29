@@ -6,4 +6,4 @@ from .models import OrgSocials
 class OrgSocialsSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrgSocials
-        fields = '__all__'
+        fields = "__all__"

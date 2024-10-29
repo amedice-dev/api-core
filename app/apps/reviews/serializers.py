@@ -1,12 +1,12 @@
 from rest_framework import serializers
 
-from .models import OrganisationReview, DoctorReview, Review
+from .models import DoctorReview, OrganisationReview, Review
 
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = '__all__'
+        fields = "__all__"
 
 
 class OrgReviewSerializer(serializers.ModelSerializer):
@@ -14,7 +14,7 @@ class OrgReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrganisationReview
-        fields = ['id', 'organisation', 'review']
+        fields = ["id", "organisation", "review"]
 
     def get_review(self, obj):
         if obj.review:
