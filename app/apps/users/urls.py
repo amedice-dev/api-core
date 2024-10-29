@@ -1,7 +1,7 @@
+from apps.organisations.urls import NoTrailingSlashRouter
 from django.urls import include, path
 
 from .views import UsersViewSet
-from apps.organisations.urls import NoTrailingSlashRouter
 
 router = NoTrailingSlashRouter()
 

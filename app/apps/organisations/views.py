@@ -1,11 +1,11 @@
-from rest_framework import viewsets
+from apps.users.permissions import CanUpdateOrganisation, IsOrgAdmin, IsOwner
+from drf_spectacular.utils import extend_schema
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status, viewsets
 from rest_framework.exceptions import NotFound
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework import status
-from drf_yasg.utils import swagger_auto_schema
-from drf_spectacular.utils import extend_schema
-from rest_framework.pagination import PageNumberPagination
 
 from .models import Organisation
 from .schema_parameters import (
@@ -16,12 +16,11 @@ from .schema_parameters import (
     PAGE_SIZE_PARAMETER,
 )
 from .serializers import (
-    OrganisationsSerializer,
-    OrganisationPostSerializer,
     OrganisationDetailSerializer,
-    OrganisationUpdateSerializer
+    OrganisationPostSerializer,
+    OrganisationsSerializer,
+    OrganisationUpdateSerializer,
 )
-from apps.users.permissions import IsOwner, IsOrgAdmin, CanUpdateOrganisation
 
 
 class CustomPageNumberPagination(PageNumberPagination):

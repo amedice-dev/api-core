@@ -1,9 +1,8 @@
-import os
-import dj_database_url
-from datetime import timedelta
 from pathlib import Path
 
+import dj_database_url
 from django.urls import reverse_lazy
+
 from .config import get_settings
 
 settings = get_settings()
@@ -78,8 +77,10 @@ WSGI_APPLICATION = "amedice.wsgi.application"
 # Database
 DATABASES = {
     "default": dj_database_url.config(
-        default=settings.database.url, engine=settings.database.engine,
-        conn_max_age=settings.database.conn_max_age, conn_health_checks=settings.database.conn_health_check
+        default=settings.database.url,
+        engine=settings.database.engine,
+        conn_max_age=settings.database.conn_max_age,
+        conn_health_checks=settings.database.conn_health_check,
     ),
 }
 
@@ -131,7 +132,7 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_RENDERER_CLASSES": [
-        'rest_framework.renderers.JSONRenderer',
+        "rest_framework.renderers.JSONRenderer",
     ],
 }
 

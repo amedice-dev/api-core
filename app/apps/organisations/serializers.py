@@ -1,11 +1,11 @@
+from apps.doctors.serializers import DoctorsSerializer
+from apps.images.serializers import OrgLogoSerializer, OrgPhotoSerializer
+from apps.reviews.serializers import OrgReviewSerializer
+from apps.socials.serializers import OrgSocialsSerializer
 from rest_framework import serializers
 
 from .models import Organisation
 from .validators import validate_working_hours
-from apps.images.serializers import OrgPhotoSerializer, OrgLogoSerializer
-from apps.socials.serializers import OrgSocialsSerializer
-from apps.reviews.serializers import OrgReviewSerializer
-from apps.doctors.serializers import DoctorsSerializer
 
 
 class BaseOrganisationSerializer(serializers.ModelSerializer):
@@ -73,7 +73,7 @@ class OrganisationsSerializer(BaseOrganisationSerializer):
         return obj.org_text_info[:200] + "..." if obj.org_text_info else None
 
     def get_org_logo(self, obj) -> dict | None:
-        logo = obj.images.filter(content_type='org_logo').first()
+        logo = obj.images.filter(content_type="org_logo").first()
         if logo:
             return OrgLogoSerializer(logo).data
         return None
@@ -103,7 +103,7 @@ class OrganisationUpdateSerializer(serializers.ModelSerializer):
             "org_socials",
             "org_category",
             "org_directions",
-            "updated_at"
+            "updated_at",
         ]
 
 
@@ -142,7 +142,7 @@ class OrganisationDetailSerializer(BaseOrganisationSerializer):
             "org_socials",
             "doctors_list",
             "org_reviews",
-            "updated_at"
+            "updated_at",
         ]
 
     def get_org_socials(self, obj) -> list[dict]:
@@ -150,13 +150,13 @@ class OrganisationDetailSerializer(BaseOrganisationSerializer):
             return OrgSocialsSerializer(obj.org_socials).data
 
     def get_org_logo(self, obj) -> dict | None:
-        logo = obj.images.filter(content_type='org_logo').first()
+        logo = obj.images.filter(content_type="org_logo").first()
         if logo:
             return OrgLogoSerializer(logo).data
         return None
 
     def get_org_photos(self, obj) -> list[dict]:
-        photos = obj.images.filter(content_type='org_photo').order_by('order')
+        photos = obj.images.filter(content_type="org_photo").order_by("order")
         if photos.exists():
             return OrgPhotoSerializer(photos, many=True).data
         return []

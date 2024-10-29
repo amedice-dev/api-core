@@ -1,10 +1,7 @@
+from apps.organisations.urls import NoTrailingSlashRouter
 from django.urls import include, path
 
-from apps.organisations.urls import NoTrailingSlashRouter
-from .views import (
-    SocialsViewSet,
-)
-
+from .views import SocialsViewSet
 
 router = NoTrailingSlashRouter()
 router.register(r"socials", SocialsViewSet)

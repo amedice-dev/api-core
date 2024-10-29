@@ -1,5 +1,6 @@
 import os
 import uuid
+
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
@@ -13,20 +14,36 @@ def generate_image_filename(instance, filename):
 
 class Image(models.Model):
     IMAGE_TYPE_CHOICES = [
-        ('org_photo', 'Organisation Photo'),
-        ('org_logo', 'Organisation Logo'),
-        ('doctor_avatar', 'Doctor Avatar'),
-        ('user_avatar', 'User Avatar'),
+        ("org_photo", "Organisation Photo"),
+        ("org_logo", "Organisation Logo"),
+        ("doctor_avatar", "Doctor Avatar"),
+        ("user_avatar", "User Avatar"),
     ]
 
     image = models.ImageField(upload_to=generate_image_filename)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     content_type = models.CharField(max_length=20, choices=IMAGE_TYPE_CHOICES)
-    org = models.ForeignKey('organisations.Organisation', on_delete=models.CASCADE, null=True, blank=True,
-                            related_name='images')
-    doctor = models.ForeignKey('doctors.Doctor', on_delete=models.CASCADE, null=True, blank=True,
-                               related_name='avatar')
-    user = models.ForeignKey('users.User', on_delete=models.CASCADE, null=True, blank=True, related_name='avatar')
+    org = models.ForeignKey(
+        "organisations.Organisation",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="images",
+    )
+    doctor = models.ForeignKey(
+        "doctors.Doctor",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="avatar",
+    )
+    user = models.ForeignKey(
+        "users.User",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="avatar",
+    )
     order = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
 
 

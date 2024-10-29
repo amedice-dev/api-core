@@ -1,11 +1,11 @@
 import os
 from datetime import timedelta
-from typing import List
 from functools import lru_cache
+from typing import List
 
 from pydantic import BaseModel
-from pydantic_settings_yaml import YamlBaseSettings
 from pydantic_settings import SettingsConfigDict
+from pydantic_settings_yaml import YamlBaseSettings
 
 
 class Database(BaseModel):
@@ -34,7 +34,7 @@ class Settings(YamlBaseSettings):
     # configure paths to secrets directory and YAML config file
     model_config = SettingsConfigDict(
         yaml_file=os.environ.get("CONFIG_NAME", "etc/config/config.yaml"),
-        secrets_dir=os.environ.get("SECRETS_DIR", "etc/secrets")
+        secrets_dir=os.environ.get("SECRETS_DIR", "etc/secrets"),
     )
 
 
