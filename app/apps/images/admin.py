@@ -6,6 +6,7 @@ from django.utils.html import mark_safe
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "image",
         "content_type",
         "object_id",

@@ -1,6 +1,6 @@
 from apps.doctors.serializers import DoctorsSerializer
 from apps.images.serializers import OrgLogoSerializer, OrgPhotoSerializer
-from apps.reviews.serializers import OrgReviewSerializer
+from apps.reviews.serializers import ReviewSerializer
 from apps.socials.serializers import OrgSocialsSerializer
 from rest_framework import serializers
 
@@ -162,8 +162,8 @@ class OrganisationDetailSerializer(BaseOrganisationSerializer):
         return []
 
     def get_org_reviews(self, obj) -> list[dict]:
-        if obj.org_reviews:
-            return OrgReviewSerializer(obj.org_reviews.all(), many=True).data
+        if obj.reviews:
+            return ReviewSerializer(obj.reviews.all(), many=True).data
 
     def get_doctors_list(self, obj) -> list[dict]:
         if obj.doctors:

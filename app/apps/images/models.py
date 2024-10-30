@@ -12,17 +12,17 @@ def generate_image_filename(instance, filename):
     return os.path.join("images", filename)
 
 
-class Image(models.Model):
-    IMAGE_TYPE_CHOICES = [
-        ("org_photo", "Organisation Photo"),
-        ("org_logo", "Organisation Logo"),
-        ("doctor_avatar", "Doctor Avatar"),
-        ("user_avatar", "User Avatar"),
-    ]
+class ImageType(models.TextChoices):
+    ORG_PHOTO = "org_photo", "Organisation Photo"
+    ORG_LOGO = "org_logo", "Organisation Logo"
+    DOC_AVATAR = "doctor_avatar", "Doctor Avatar"
+    USER_AVATAR = "user_avatar", "User Avatar"
 
+
+class Image(models.Model):
     image = models.ImageField(upload_to=generate_image_filename)
     uploaded_at = models.DateTimeField(auto_now_add=True)
-    content_type = models.CharField(max_length=20, choices=IMAGE_TYPE_CHOICES)
+    content_type = models.CharField(max_length=20, choices=ImageType.choices)
     org = models.ForeignKey(
         "organisations.Organisation",
         on_delete=models.CASCADE,
